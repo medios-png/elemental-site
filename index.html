@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>elemental.. — Los elementos esenciales de una organización productiva</title>
+<meta name="description" content="Conectamos estrategia, talento e IA en un sistema que produce resultados de negocio medibles. Bogotá, Colombia."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;1,9..144,200;1,9..144,300&family=Syne:wght@400;500;600;700&family=Syne+Mono&display=swap" rel="stylesheet"/>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════════════
+   ROOT + RESET
+═══════════════════════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --void:#060504;--void2:#0d0b09;--void3:#151210;
+  --cream:#F5EFE4;--cream2:#EDE7DA;--cream3:#E2D8C8;
+  --chalk:#FAFAF7;
+  --sage:#3B6B47;--sage2:#2C5236;--sageL:#5EAA70;--sageP:#CAE8D2;
+  --gold:#B8902A;--goldL:#CFA840;--goldP:#F0E4B8;
+  --blue:#264470;
+  --orange:#D4620A;--blueL:#4A72B0;
+  --red:#8C3020;
+  --ink:#EDE8DE;--mist:#A8A098;--fog:#6A6460;--smoke:#3A3632;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Syne',system-ui,sans-serif;
+  --mono:'Syne Mono',monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --ease2:cubic-bezier(.16,1,.3,1);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--void);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--sage);color:#fff}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CURSOR
+═══════════════════════════════════════════════════════════════════════════ */
+.c-dot,.c-ring{position:fixed;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+.c-dot{width:8px;height:8px;background:var(--goldL);transition:width .25s var(--ease),height .25s var(--ease),background .25s}
+.c-ring{width:38px;height:38px;border:1px solid rgba(207,168,64,.3);transition:width .35s var(--ease),height .35s var(--ease),border-color .35s}
+body:has(a:hover,button:hover,.pa-hdr:hover) .c-dot{width:18px;height:18px;background:var(--sageL)}
+body:has(a:hover,button:hover,.pa-hdr:hover) .c-ring{width:54px;height:54px;border-color:rgba(94,170,112,.45)}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   NOISE LAYER
+═══════════════════════════════════════════════════════════════════════════ */
+body::after{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E")}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   NAVIGATION — McKinsey pattern: thin, sticky, white-on-dark
+═══════════════════════════════════════════════════════════════════════════ */
+nav{position:fixed;top:0;inset-inline:0;z-index:700;height:66px;padding:0 52px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid transparent;transition:all .4s var(--ease)}
+nav.is-solid{background:rgba(6,5,4,.94);backdrop-filter:blur(20px);border-color:rgba(255,255,255,.07)}
+.nav-logo{display:flex;align-items:baseline;gap:0;flex-shrink:0}
+.nav-logo-name{font-family:var(--serif);font-size:21px;font-weight:200;color:#fff;letter-spacing:-.01em;text-transform:none}
+
+
+/* ═══ LOGO elemental.. ═══════════════════════════════════════════════════════
+   Estructura exacta del logo original (PNG):
+   · "elemental" — serif, minúscula, color oscuro del texto
+   · Círculo naranja GRANDE — al nivel del período (baseline), pegado a la "l"
+   · Círculo naranja PEQUEÑO — debajo del grande, mismo eje x, más pequeño
+   Sin período tipográfico. Solo los dos círculos naranja.
+═══════════════════════════════════════════════════════════════════════════ */
+.logo-mark{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  vertical-align:-0.52em;
+  margin-left:3px;
+  gap:2.5px;
+}
+.lm-t,.lm-b{
+  width:4.5px;height:4.5px;
+  border-radius:50%;
+  background:#D4620A;
+  display:block;flex-shrink:0;
+}
+/* lg — footer */
+.logo-mark--lg{gap:3px;margin-left:4px;vertical-align:-0.58em}
+.logo-mark--lg .lm-t,.logo-mark--lg .lm-b{width:6px;height:6px}
+/* sm — eyebrow, badges */
+.logo-mark--sm{gap:2px;margin-left:2px;vertical-align:-0.44em}
+.logo-mark--sm .lm-t,.logo-mark--sm .lm-b{width:3px;height:3px}
+/* nav specific */
+.nav-logo .logo-mark{
+  vertical-align:baseline;
+  gap:2.5px;
+  margin-left:3px;
+  position:relative;
+  top:8px;
+}
+.nav-logo .lm-t,.nav-logo .lm-b{width:4.5px;height:4.5px}
+.nav-links{display:flex;gap:24px;flex-shrink:0}
+.nav-links a{font-size:11px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--mist);transition:color .2s}
+.nav-links a:hover{color:#fff}
+.nav-btn{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--void);background:var(--goldL);border:none;padding:9px 16px;border-radius:2px;cursor:pointer;transition:background .2s,transform .15s;white-space:nowrap;flex-shrink:0}
+.nav-btn:hover{background:var(--gold);transform:translateY(-1px)}
+@media(max-width:1000px){.nav-links{display:none}}@media(max-width:768px){nav{padding:0 20px}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HERO — Split: editorial left / animated metrics right
+   Reference: BCG.com hero with large claim + data column
+═══════════════════════════════════════════════════════════════════════════ */
+.hero{min-height:100svh;display:flex;flex-direction:column;position:relative;overflow:hidden;background:var(--void)}
+
+/* Architectural grid lines */
+.hero-bg{position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+  background-size:88px 88px;
+  mask-image:radial-gradient(ellipse 80% 70% at 60% 80%,black,transparent 75%)}
+
+/* Gold vertical accent */
+.hero-vline{position:absolute;right:22%;top:0;width:1px;height:100%;
+  background:linear-gradient(to bottom,transparent,rgba(207,168,64,.18) 30%,rgba(207,168,64,.18) 70%,transparent)}
+.hero-vdot{position:absolute;right:22%;top:46%;width:8px;height:8px;border-radius:50%;
+  background:var(--goldL);transform:translateX(-50%);
+  box-shadow:0 0 28px var(--goldL),0 0 56px rgba(207,168,64,.3)}
+.hero-vdot::before{content:'';position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(207,168,64,.25);animation:pulse 2.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:0}}
+
+/* Oversized decorative letter — subtle background */
+.hero-deco{position:absolute;right:-4%;top:-14%;font-family:var(--serif);font-size:min(55vw,800px);font-weight:200;font-style:italic;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.03);line-height:1;pointer-events:none;user-select:none;letter-spacing:-.04em}
+
+.hero-main{flex:1;display:grid;grid-template-columns:1fr 360px;gap:48px;padding:136px 52px 0;align-items:end;position:relative;z-index:1;max-width:1380px;width:100%;margin:0 auto}
+
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--goldL);margin-bottom:24px;opacity:0;animation:riseIn .8s var(--ease) .08s both}
+.hero-h1{font-family:var(--serif);font-size:clamp(54px,6.8vw,108px);font-weight:200;line-height:1.01;letter-spacing:-.03em;max-width:840px;opacity:0;animation:riseIn 1s var(--ease) .2s both}
+.hero-h1 em{font-style:italic;color:var(--mist)}
+.hero-h1 .gold-dot{color:var(--goldL)}
+.hero-sub{font-size:17px;font-weight:400;color:var(--mist);line-height:1.78;max-width:500px;margin-top:28px;opacity:0;animation:riseIn .9s var(--ease) .36s both}
+.hero-ctas{display:flex;gap:14px;margin-top:44px;flex-wrap:wrap;opacity:0;animation:riseIn .8s var(--ease) .5s both}
+.btn-gold{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--void);background:var(--goldL);padding:14px 28px;border-radius:2px;transition:background .2s,transform .15s,box-shadow .2s}
+.btn-gold:hover{background:var(--gold);transform:translateY(-2px);box-shadow:0 10px 30px rgba(184,144,42,.4)}
+.btn-stroke{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--mist);border:1px solid rgba(255,255,255,.16);padding:14px 24px;border-radius:2px;transition:all .2s}
+.btn-stroke:hover{border-color:rgba(255,255,255,.35);color:#fff}
+
+/* Right column: metrics panel */
+.hero-metrics{opacity:0;animation:riseIn .8s var(--ease) .62s both;align-self:center}
+.hero-m-tag{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--fog);margin-bottom:16px}
+.hero-m{border-top:1px solid rgba(255,255,255,.07);padding:20px 0}
+.hero-m:last-child{border-bottom:1px solid rgba(255,255,255,.07)}
+.hero-m-val{font-family:var(--serif);font-size:42px;font-weight:200;color:#fff;line-height:1;margin-bottom:5px}
+.hero-m-lbl{font-size:11px;color:var(--mist);line-height:1.55;max-width:200px}
+
+/* Marquee ticker */
+.marquee-strip{border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);overflow:hidden;padding:14px 0;margin-top:64px;position:relative;z-index:1;opacity:0;animation:riseIn .7s var(--ease) .72s both}
+.marquee-track{display:flex;width:max-content;animation:scrollX 36s linear infinite}
+.m-item{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--fog);padding:0 44px;border-right:1px solid rgba(255,255,255,.07);white-space:nowrap}
+.m-item .dot{color:var(--goldL);margin:0 6px}
+@keyframes scrollX{to{transform:translateX(-50%)}}
+@media(max-width:900px){.hero-main{grid-template-columns:1fr;padding:110px 20px 0}.hero-metrics{display:none}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SHARED LAYOUT UTILITIES
+═══════════════════════════════════════════════════════════════════════════ */
+.S{padding:108px 52px}.W{max-width:1280px;margin:0 auto}
+.S--dk2{background:var(--void2)}.S--dk3{background:var(--void3)}
+.S--cream{background:var(--cream);color:var(--void)}
+.S--sage{background:var(--sage2)}
+.kicker{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;margin-bottom:22px}
+.kicker-gold{color:var(--goldL)}.kicker-sage{color:var(--sageL)}.kicker-dk{color:var(--sage)}.kicker-blue{color:var(--blueL)}
+.H{font-family:var(--serif);font-weight:200;font-size:clamp(36px,4.5vw,62px);line-height:1.06;letter-spacing:-.025em;margin-bottom:22px}
+.H em{font-style:italic}.H--ink{color:var(--void)}
+.lead{font-size:17px;font-weight:400;line-height:1.8;color:var(--mist);max-width:580px}
+.lead--dk{color:var(--fog)}
+@media(max-width:768px){.S{padding:72px 20px}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   AXIOM STATEMENT — McKinsey pullquote style
+═══════════════════════════════════════════════════════════════════════════ */
+.axiom{padding:80px 52px;background:var(--void2);border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07)}
+.axiom-body{max-width:980px;margin:0 auto}
+.axiom-q{font-family:var(--serif);font-size:clamp(26px,3.8vw,52px);font-weight:200;font-style:italic;color:rgba(255,255,255,.75);line-height:1.38}
+.axiom-q em{font-style:normal;color:var(--goldL)}
+.axiom-attr{font-size:12px;color:var(--fog);margin-top:22px;letter-spacing:.04em}
+@media(max-width:768px){.axiom{padding:56px 20px}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DOS BRAZOS — BCG color-block alternating pattern
+═══════════════════════════════════════════════════════════════════════════ */
+.brazos-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:72px;background:rgba(255,255,255,.05)}
+.brazo{padding:60px 52px;position:relative;overflow:hidden;transition:transform .4s var(--ease)}
+.brazo:hover{transform:translateY(-5px)}
+.brazo::before{content:attr(data-n);position:absolute;right:28px;bottom:-20px;font-family:var(--serif);font-size:180px;font-weight:200;font-style:italic;opacity:.04;color:#fff;line-height:1;pointer-events:none}
+
+/* Hero chapter pills */
+.hero-caps{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px;opacity:0;animation:riseIn .8s var(--ease) .3s both}
+.hero-cap{display:flex;flex-direction:column;gap:4px;padding:14px 18px;border-radius:3px;border:1px solid;text-decoration:none;transition:transform .25s var(--ease),box-shadow .25s}
+.hero-cap:hover{transform:translateY(-2px)}
+.hero-cap--th{border-color:rgba(94,170,112,.25);background:rgba(59,107,71,.1)}
+.hero-cap--th:hover{box-shadow:0 6px 24px rgba(59,107,71,.25)}
+.hero-cap--med{border-color:rgba(74,114,176,.25);background:rgba(38,68,112,.1)}
+.hero-cap--med:hover{box-shadow:0 6px 24px rgba(38,68,112,.25)}
+.hero-cap-n{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.1em}
+.hero-cap--th .hero-cap-n{color:var(--sageL)}.hero-cap--med .hero-cap-n{color:var(--blueL)}
+.hero-cap-name{font-family:var(--serif);font-size:16px;font-weight:300;color:#fff;letter-spacing:-.01em}
+.hero-cap-sub{font-size:10px;color:var(--fog);letter-spacing:.04em}
+
+/* Brazo producto badge */
+.brazo-producto{margin-top:22px;padding:16px 18px;background:rgba(94,170,112,.08);border:1px solid rgba(94,170,112,.16);border-radius:2px}
+.bp-label{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--sageL);margin-bottom:5px}
+.bp-name{font-family:var(--serif);font-size:20px;font-weight:200;color:#fff;letter-spacing:-.01em;margin-bottom:3px}
+.bp-desc{font-size:11px;color:var(--mist)}
+
+/* Medios: 4 service lines */
+.med-servicios{display:flex;flex-direction:column;gap:0;margin-top:22px}
+
+/* Medios detail cards 2x2 */
+.med-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:72px;background:rgba(255,255,255,.05)}
+.mdc{padding:52px 44px;position:relative;transition:transform .3s var(--ease)}
+.mdc:hover{transform:translateY(-4px)}
+.mdc--com{background:#0B0E13}
+.mdc--med{background:#0A0D12}
+.mdc--out{background:#0D0B11}
+.mdc--res{background:#0C0D0A}
+.mdc-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:18px}
+.mdc-n{font-family:var(--serif);font-size:28px;font-weight:200;font-style:italic;line-height:1;flex-shrink:0;margin-top:2px}
+.mdc--com .mdc-n,.mdc--med .mdc-n{color:var(--blueL)}
+.mdc--out .mdc-n{color:rgba(160,130,200,.7)}
+.mdc--res .mdc-n{color:var(--goldL)}
+.mdc-title{font-family:var(--serif);font-size:22px;font-weight:300;color:#fff;letter-spacing:-.01em;margin-bottom:4px}
+.mdc-sub{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.mdc--com .mdc-sub,.mdc--med .mdc-sub{color:var(--blueL)}
+.mdc--out .mdc-sub{color:rgba(160,130,200,.7)}
+.mdc--res .mdc-sub{color:var(--goldL)}
+.mdc-body{font-size:13px;color:var(--mist);line-height:1.78;margin-bottom:22px}
+.mdc-items{display:flex;flex-direction:column;gap:0}
+.mdi{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:rgba(255,255,255,.6);padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05);line-height:1.5}
+.mdi:last-child{border:none}
+.mdi-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.mdc--com .mdi-dot,.mdc--med .mdi-dot{background:var(--blueL)}
+.mdc--out .mdi-dot{background:rgba(160,130,200,.7)}
+.mdc--res .mdi-dot{background:var(--goldL)}
+/* CTA row below grid */
+.med-cta-row{margin-top:52px;padding-top:40px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.med-cta-q{font-family:var(--serif);font-size:clamp(16px,2vw,22px);font-weight:200;font-style:italic;color:rgba(255,255,255,.6);max-width:620px;line-height:1.45}
+.med-cta-btn{flex-shrink:0}
+@media(max-width:900px){.med-detail-grid{grid-template-columns:1fr}.med-cta-row{flex-direction:column;align-items:flex-start}}
+.ms{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);transition:background .2s}
+.ms:first-child{border-top:1px solid rgba(255,255,255,.06)}
+.ms:hover{background:rgba(74,114,176,.06);margin:0 -8px;padding:14px 8px;border-radius:2px}
+.ms-n{font-family:var(--serif);font-size:12px;font-weight:300;font-style:italic;color:var(--blueL);width:22px;flex-shrink:0;margin-top:2px;text-align:right}
+.ms-title{font-size:14px;font-weight:500;color:#fff;margin-bottom:3px}
+.ms-subs{font-size:11px;color:var(--mist);line-height:1.55}
+.brazo-th{background:rgba(59,107,71,.12);border:1px solid rgba(94,170,112,.12)}
+.brazo-med{background:rgba(38,68,112,.12);border:1px solid rgba(74,114,176,.12)}
+.brazo-tag{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:20px}
+.brazo-th .brazo-tag{color:var(--sageL)}.brazo-med .brazo-tag{color:var(--blueL)}
+.brazo-h{font-family:var(--serif);font-size:clamp(22px,2.8vw,38px);font-weight:200;color:#fff;line-height:1.18;margin-bottom:18px}
+.brazo-p{font-size:14px;color:var(--mist);line-height:1.82;max-width:400px;margin-bottom:26px}
+.brazo-q{font-family:var(--serif);font-style:italic;font-size:16px;color:rgba(255,255,255,.5);line-height:1.6;padding:20px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:24px}
+.arrow-link{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;transition:gap .25s}
+.arrow-link:hover{gap:14px}
+.brazo-th .arrow-link{color:var(--sageL)}.brazo-med .arrow-link{color:var(--blueL)}
+@media(max-width:900px){.brazos-grid{grid-template-columns:1fr}.brazo{padding:44px 28px}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PROBLEMA — sticky scroll, McKinsey editorial pattern
+═══════════════════════════════════════════════════════════════════════════ */
+.prob-layout{display:grid;grid-template-columns:1fr 1fr;gap:88px;align-items:start;margin-top:80px}
+.prob-pin{position:sticky;top:100px}
+.prob-note{margin-top:28px;padding:24px 28px;border:1px solid rgba(207,168,64,.15);background:rgba(207,168,64,.05);border-radius:2px}
+.prob-note p{font-family:var(--serif);font-size:17px;font-weight:200;font-style:italic;color:rgba(255,255,255,.65);line-height:1.55}
+.prob-cards{display:flex;flex-direction:column;gap:0}
+.pc{border:1px solid rgba(255,255,255,.07);padding:36px 32px;position:relative;overflow:hidden;transition:border-color .3s,transform .35s var(--ease)}
+.pc:hover{border-color:rgba(207,168,64,.28);transform:translateX(10px)}
+.pc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:var(--goldL);transition:width .35s var(--ease)}
+.pc:hover::before{width:3px}
+.pc-n{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--fog);margin-bottom:12px}
+.pc-h{font-family:var(--serif);font-size:30px;font-weight:200;color:#fff;margin-bottom:12px}
+.pc-p{font-size:13px;color:var(--mist);line-height:1.78}
+.pc-tag{display:inline-block;margin-top:16px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,.1);color:var(--fog);padding:4px 12px;border-radius:2px}
+@media(max-width:900px){.prob-layout{grid-template-columns:1fr;gap:48px}.prob-pin{position:relative;top:0}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   STATS BAND — animated counters, Deloitte data-forward style
+═══════════════════════════════════════════════════════════════════════════ */
+.stats-band{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07)}
+.stat{padding:56px 44px;border-right:1px solid rgba(255,255,255,.07);transition:background .25s}
+.stat:last-child{border-right:none}
+.stat:hover{background:rgba(94,170,112,.06)}
+.stat-val{font-family:var(--serif);font-size:clamp(48px,5vw,76px);font-weight:200;color:#fff;line-height:1;margin-bottom:12px}
+.stat-lbl{font-size:13px;color:var(--mist);line-height:1.65;max-width:190px}
+.stat-src{font-size:10px;color:var(--fog);margin-top:6px;font-style:italic}
+@media(max-width:900px){.stats-band{grid-template-columns:1fr 1fr}.stat{border-right:1px solid rgba(255,255,255,.07)}.stat:nth-child(even){border-right:none}.stat:nth-child(n+3){border-top:1px solid rgba(255,255,255,.07)}}
+@media(max-width:500px){.stats-band{grid-template-columns:1fr}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   COSTO — dark, urgent, data-driven
+═══════════════════════════════════════════════════════════════════════════ */
+.costo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(255,255,255,.05);margin-top:72px}
+.cc{padding:52px 44px;position:relative;overflow:hidden;transition:transform .3s var(--ease)}
+.cc:hover{transform:translateY(-6px)}
+.cc::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.04) 0%,transparent 60%);pointer-events:none}
+.cc-r{background:#0E0908}.cc-a{background:#0D0C07}.cc-g{background:#090B0E}
+.cc-bar{height:3px;margin-bottom:36px}
+.cc-r .cc-bar{background:linear-gradient(90deg,#A03020,transparent)}
+.cc-a .cc-bar{background:linear-gradient(90deg,var(--goldL),transparent)}
+.cc-g .cc-bar{background:linear-gradient(90deg,rgba(255,255,255,.22),transparent)}
+.cc-big{font-family:var(--serif);font-size:80px;font-weight:200;line-height:1;margin-bottom:14px}
+.cc-r .cc-big{color:#CC6050}.cc-a .cc-big{color:var(--goldL)}.cc-g .cc-big{color:rgba(255,255,255,.4)}
+.cc-label{font-size:14px;font-weight:600;margin-bottom:18px;letter-spacing:.01em}
+.cc-r .cc-label{color:#CC6050}.cc-a .cc-label{color:var(--goldL)}.cc-g .cc-label{color:var(--mist)}
+.cc-body{font-size:13px;color:var(--mist);line-height:1.78}
+@media(max-width:768px){.costo-grid{grid-template-columns:1fr}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PROPUESTA / NO ES - SÍ ES
+═══════════════════════════════════════════════════════════════════════════ */
+.big-quote{font-family:var(--serif);font-size:clamp(24px,3.5vw,50px);font-weight:200;font-style:italic;color:rgba(255,255,255,.8);line-height:1.35;max-width:960px;margin:0 auto;text-align:center;padding:80px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
+.big-quote em{font-style:normal;color:var(--sageL)}
+.noes{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:80px;background:rgba(255,255,255,.05)}
+.nc{padding:52px 44px}
+.nc--no{background:var(--void3)}.nc--yes{background:#090E0A}
+.nc-h{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:26px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.07)}
+.nc-h--no{color:#B06050}.nc-h--yes{color:var(--sageL)}
+.nr{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--mist);padding:13px 0;border-bottom:1px solid rgba(255,255,255,.04);line-height:1.55}
+.nr:last-child{border:none}
+.nd{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:6px}
+.nd-no{background:#B06050}.nd-yes{background:var(--sageL)}
+@media(max-width:700px){.noes{grid-template-columns:1fr}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TRUST BAR — social proof signals (Accenture pattern)
+═══════════════════════════════════════════════════════════════════════════ */
+.trust-bar{padding:36px 52px;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);display:flex;justify-content:center;gap:48px;flex-wrap:wrap;background:var(--void2)}
+.ti{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--mist)}
+.ti-icon{width:32px;height:32px;border-radius:50%;background:rgba(94,170,112,.1);border:1px solid rgba(94,170,112,.2);display:flex;align-items:center;justify-content:center;color:var(--sageL);font-size:14px;flex-shrink:0}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CÓMO TRABAJAMOS — Deloitte numbered methodology
+═══════════════════════════════════════════════════════════════════════════ */
+.proceso-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;margin-top:80px;align-items:start}
+.proceso-steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:24px;padding:28px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:default;transition:opacity .2s}
+.step:first-child{border-top:1px solid rgba(255,255,255,.06)}
+.step:hover .step-n{background:var(--sage);color:#fff;border-color:var(--sage)}
+.step-n{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:500;color:var(--mist);flex-shrink:0;margin-top:2px;transition:all .3s var(--ease)}
+.step-title{font-size:16px;font-weight:500;color:#fff;margin-bottom:6px}
+.step-body{font-size:13px;color:var(--mist);line-height:1.72}
+.step-tag{display:inline-block;margin-top:10px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sageL);background:rgba(94,170,112,.1);border:1px solid rgba(94,170,112,.18);padding:3px 10px;border-radius:2px}
+.proceso-visual{position:sticky;top:100px;background:var(--void2);border:1px solid rgba(255,255,255,.07);border-radius:3px;padding:44px;text-align:center}
+.pv-tag{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--goldL);margin-bottom:16px}
+.pv-num{font-family:var(--serif);font-size:80px;font-weight:200;color:#fff;line-height:1;margin-bottom:8px}
+.pv-label{font-size:13px;color:var(--mist)}
+.pv-note{font-size:12px;color:var(--fog);margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);font-style:italic;line-height:1.6}
+@media(max-width:900px){.proceso-grid{grid-template-columns:1fr;gap:40px}.proceso-visual{position:relative;top:0}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PRODUCTOS — Cream background, accordion (BCG light section)
+═══════════════════════════════════════════════════════════════════════════ */
+.prod-header{display:grid;grid-template-columns:1fr 1fr;gap:80px;margin-bottom:64px;align-items:end}
+.escala{display:flex;flex-direction:column;gap:2px}
+.ei{display:flex;align-items:center;gap:14px;padding:15px 18px;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:2px;transition:all .2s;cursor:default}
+.ei:hover{background:var(--cream2);border-color:rgba(59,107,71,.22)}
+.ei-code{font-family:var(--mono);font-size:10px;font-weight:600;background:var(--sageP);color:var(--sage);padding:4px 10px;border-radius:2px;flex-shrink:0;letter-spacing:.05em}
+.ei-name{font-family:var(--serif);font-size:18px;font-weight:300;color:var(--void);flex:1;letter-spacing:-.01em}
+.ei-price{font-family:var(--mono);font-size:11px;color:var(--sage);white-space:nowrap}
+.ei-arrow{color:var(--sage);font-size:13px}
+.pa{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:2px;overflow:hidden;transition:box-shadow .25s}
+.pa:hover{box-shadow:0 4px 24px rgba(0,0,0,.09)}
+.pa.open{border-color:rgba(59,107,71,.28)}
+.pa+.pa{margin-top:2px}
+.pa-hdr{display:flex;align-items:center;gap:14px;padding:22px 26px;cursor:pointer;user-select:none;transition:background .15s}
+.pa-hdr:hover{background:rgba(59,107,71,.04)}
+.pa-code{width:38px;height:38px;border-radius:50%;background:var(--sageP);color:var(--sage);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;font-weight:600;flex-shrink:0;transition:all .3s}
+.pa.open .pa-code{background:var(--sage);color:#fff}
+.pa-name{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--void);flex:1;letter-spacing:-.01em}
+.pa-tagline{font-size:12px;color:var(--fog)}
+.pa-price{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--sage);white-space:nowrap;margin-right:14px}
+.pa-chv{width:26px;height:26px;border:1px solid rgba(0,0,0,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--fog);flex-shrink:0;transition:transform .3s,background .25s,border-color .25s}
+.pa.open .pa-chv{transform:rotate(180deg);background:var(--sage);border-color:var(--sage);color:#fff}
+.pa-body{display:none;padding:0 26px 30px}
+.pa.open .pa-body{display:block}
+.pa-inner{display:grid;grid-template-columns:1fr 1fr;gap:32px;padding-top:24px;border-top:1px solid rgba(0,0,0,.06)}
+.dl{margin-bottom:18px}
+.dt{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--fog);margin-bottom:7px}
+.dd{font-size:14px;color:var(--void2);line-height:1.68}
+.dd strong{color:var(--void);font-weight:500}
+.pli{list-style:none;margin-top:12px}
+.pli li{font-size:13px;color:var(--fog);padding:9px 0;border-bottom:1px solid rgba(0,0,0,.06);display:flex;gap:10px;line-height:1.5}
+.pli li:last-child{border:none}
+.pli li::before{content:'→';color:var(--sage);font-size:11px;flex-shrink:0;margin-top:2px}
+.pa-link{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sage);transition:gap .2s}
+.pa-link:hover{gap:14px}
+.prod-rule{font-size:12px;color:var(--fog);text-align:center;margin-top:28px;font-style:italic;padding-top:24px;border-top:1px solid rgba(0,0,0,.07)}
+@media(max-width:900px){.prod-header{grid-template-columns:1fr;gap:40px}.pa-inner{grid-template-columns:1fr}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SEÑAL / POSICIONAMIENTO
+═══════════════════════════════════════════════════════════════════════════ */
+.signal-box{background:rgba(94,170,112,.07);border:1px solid rgba(94,170,112,.16);border-radius:2px;padding:60px 56px;position:relative;overflow:hidden}
+.signal-box::after{content:'"';position:absolute;right:-16px;bottom:-80px;font-family:var(--serif);font-size:360px;font-weight:200;color:rgba(94,170,112,.05);line-height:1;pointer-events:none}
+.signal-label{display:flex;align-items:center;gap:12px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--sageL);margin-bottom:20px}
+.signal-label::before{content:'';width:28px;height:1px;background:var(--sageL)}
+.signal-h{font-family:var(--serif);font-size:clamp(24px,3.2vw,44px);font-weight:200;color:#fff;line-height:1.2;margin-bottom:18px}
+.signal-p{font-size:15px;color:var(--mist);line-height:1.82;max-width:700px}
+.signal-p strong{color:#fff;font-weight:400}
+.vs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.vc{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:2px;padding:26px 24px}
+.vc-them{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--fog);margin-bottom:8px}
+.vc-claim{font-size:13px;color:var(--fog);margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.07)}
+.vc-us{font-size:13px;color:var(--sageP);line-height:1.68;display:flex;gap:8px}
+.vc-us::before{content:'›';color:var(--sageL);flex-shrink:0;font-weight:700}
+.cliente-pair{display:grid;grid-template-columns:1fr;gap:16px;margin-top:16px;max-width:600px}
+.cpcard{border:1px solid rgba(255,255,255,.08);border-radius:2px;padding:32px}
+.cpcard .kicker{margin-bottom:12px}
+.cpcard p{font-size:14px;color:var(--mist);line-height:1.78}
+.cpcard p strong{color:#fff;font-weight:400}
+@media(max-width:700px){.vs-grid{grid-template-columns:1fr}.cliente-pair{grid-template-columns:1fr}.signal-box{padding:40px 28px}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CALCULADORA — Interactive ROI tool
+═══════════════════════════════════════════════════════════════════════════ */
+.calc-layout{display:grid;grid-template-columns:1fr 1fr;gap:88px;align-items:start}
+.calc-right .cream-panel{background:var(--cream);border-radius:3px;padding:48px;color:var(--void)}
+.cf{margin-bottom:30px}
+.cf label{display:flex;justify-content:space-between;align-items:baseline;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fog);margin-bottom:11px}
+.cf label .cv{font-family:var(--mono);font-size:20px;color:var(--void);text-transform:none;letter-spacing:0;font-weight:400}
+input[type=range]{width:100%;-webkit-appearance:none;height:2px;background:var(--cream3);border-radius:2px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--sage);cursor:pointer;border:3px solid var(--cream);box-shadow:0 0 0 2px var(--sage);transition:transform .15s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.25)}
+.calc-result-box{background:var(--sage2);border-radius:3px;padding:40px;color:#fff;text-align:center;margin-top:24px}
+.crb-lbl{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--sageP);margin-bottom:12px}
+.crb-num{font-family:var(--serif);font-size:68px;font-weight:200;line-height:1;margin-bottom:6px}
+.crb-sub{font-size:12px;color:var(--sageP)}
+.crb-disc{font-size:11px;color:rgba(255,255,255,.38);margin-top:12px;font-style:italic}
+@media(max-width:900px){.calc-layout{grid-template-columns:1fr;gap:40px}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FAQ — Objection handling
+═══════════════════════════════════════════════════════════════════════════ */
+.faq-layout{display:grid;grid-template-columns:1fr 2fr;gap:88px;align-items:start}
+.faq-sticky{position:sticky;top:100px}
+.faq-list{display:flex;flex-direction:column;gap:0}
+.fq{border-bottom:1px solid rgba(0,0,0,.1);overflow:hidden}
+.fq:first-child{border-top:1px solid rgba(0,0,0,.1)}
+.fq-hdr{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding:24px 0;cursor:pointer;user-select:none}
+.fq-q{font-family:var(--serif);font-size:19px;font-weight:300;color:var(--void);line-height:1.3;letter-spacing:-.01em}
+.fq-icon{width:28px;height:28px;border:1px solid rgba(0,0,0,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--fog);flex-shrink:0;transition:transform .3s,background .25s,color .25s}
+.fq.open .fq-icon{transform:rotate(45deg);background:var(--sage);border-color:var(--sage);color:#fff}
+.fq-body{display:none;padding-bottom:24px}
+.fq.open .fq-body{display:block}
+.fq-body p{font-size:14px;color:var(--fog);line-height:1.8}
+@media(max-width:900px){.faq-layout{grid-template-columns:1fr;gap:40px}.faq-sticky{position:relative;top:0}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CONTACTO
+═══════════════════════════════════════════════════════════════════════════ */
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:88px;align-items:start}
+.contact-p{font-size:16px;font-weight:400;color:var(--mist);line-height:1.82;margin-bottom:36px}
+.pasos{display:flex;flex-direction:column;margin-bottom:36px}
+.paso{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.paso:first-child{border-top:1px solid rgba(255,255,255,.06)}
+.paso-n{width:32px;height:32px;border-radius:50%;border:1px solid rgba(94,170,112,.28);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:var(--sageL);flex-shrink:0;margin-top:2px}
+.paso-t{font-size:14px;font-weight:500;color:#fff;margin-bottom:3px}
+.paso-s{font-size:12px;color:var(--mist)}
+.urgency{background:rgba(207,168,64,.07);border:1px solid rgba(207,168,64,.18);border-radius:2px;padding:20px 26px}
+.urgency h4{font-size:12px;font-weight:700;color:var(--goldL);margin-bottom:6px;letter-spacing:.04em;text-transform:uppercase}
+.urgency p{font-size:13px;color:var(--mist);line-height:1.65}
+.fw{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:3px;padding:44px}
+.f2c{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.fg label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mist)}
+.fg input,.fg select,.fg textarea{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:2px;padding:12px 15px;font-size:14px;color:#fff;font-family:var(--sans);outline:none;width:100%;transition:border-color .2s,background .2s}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(255,255,255,.2)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:rgba(94,170,112,.45);background:rgba(94,170,112,.04)}
+.fg select option{background:#151210;color:#fff}
+.fg textarea{resize:vertical;min-height:80px;line-height:1.65}
+.f-submit{width:100%;padding:15px;background:var(--sage);border:none;border-radius:2px;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;cursor:pointer;transition:background .2s,transform .15s}
+.f-submit:hover{background:var(--sage2);transform:translateY(-1px)}
+.f-note{font-size:11px;color:var(--fog);text-align:center;margin-top:12px;font-style:italic}
+.f-ok{display:none;text-align:center;padding:60px 24px}
+.f-ok-icon{width:54px;height:54px;border-radius:50%;background:rgba(94,170,112,.1);border:1px solid rgba(94,170,112,.25);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--sageL);margin:0 auto 20px}
+.f-ok h3{font-family:var(--serif);font-size:28px;font-weight:200;color:#fff;margin-bottom:10px}
+.f-ok p{font-size:14px;color:var(--mist);line-height:1.75}
+@media(max-width:900px){.contact-layout{grid-template-columns:1fr;gap:48px}.f2c{grid-template-columns:1fr}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   STICKY BAR
+═══════════════════════════════════════════════════════════════════════════ */
+.sbar{position:fixed;bottom:0;inset-inline:0;z-index:600;background:rgba(6,5,4,.96);backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,.07);padding:14px 52px;display:flex;align-items:center;justify-content:space-between;gap:20px;transform:translateY(100%);transition:transform .45s var(--ease)}
+.sbar.on{transform:translateY(0)}
+.sbar-msg{font-family:var(--serif);font-size:16px;font-weight:200;color:var(--mist);font-style:italic}
+.sbar-msg strong{font-style:normal;font-weight:300;color:#fff}
+.sbar-btns{display:flex;gap:10px;flex-shrink:0}
+@media(max-width:768px){.sbar{padding:12px 20px;flex-wrap:wrap;gap:10px}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════════════════════════════ */
+footer{background:var(--void2);border-top:1px solid rgba(255,255,255,.07);padding:56px 52px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px}
+.f-brand{font-family:var(--serif);font-size:22px;font-weight:200;color:#fff}
+
+.f-mid{text-align:center;font-size:12px;color:var(--fog);line-height:1.7}
+.f-right{text-align:right}
+.f-email{font-size:13px;color:var(--sageL);text-decoration:none;transition:color .2s}
+.f-email:hover{color:var(--sageP)}
+.f-brand .logo-mark{position:relative;top:6px}
+@media(max-width:768px){footer{grid-template-columns:1fr;gap:16px;padding:36px 20px;text-align:center}.f-right{text-align:center}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════════════════════════════════════════ */
+[data-r]{opacity:0;transform:translateY(26px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
+[data-r].on{opacity:1;transform:none}
+[data-r-d="1"]{transition-delay:.1s}[data-r-d="2"]{transition-delay:.2s}
+[data-r-d="3"]{transition-delay:.3s}[data-r-d="4"]{transition-delay:.4s}
+
+@keyframes riseIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE FIRST
+   Breakpoints: 480px (xs) · 640px (sm) · 768px (md) · 1024px (lg)
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Hide cursor on touch devices ─────────────────────────────────────── */
+@media(hover:none){.c-dot,.c-ring{display:none}}
+
+/* ── BASE MOBILE (< 640px) ────────────────────────────────────────────── */
+@media(max-width:640px){
+
+  /* Typography scale down */
+  .hero-h1{font-size:clamp(38px,10vw,54px);letter-spacing:-.02em}
+  .hero-sub{font-size:15px;margin-top:20px}
+  .hero-eyebrow{margin-bottom:16px;font-size:10px}
+  .hero-caps{flex-direction:column;gap:8px}
+  .hero-cap{padding:12px 14px}
+  .hero-cap-name{font-size:14px}
+  .hero-ctas{flex-direction:column;gap:10px;margin-top:28px}
+  .btn-gold,.btn-stroke{width:100%;justify-content:center;text-align:center}
+  .hero-main{padding:100px 20px 0;gap:32px}
+  .hero-deco{font-size:clamp(200px,55vw,400px)}
+  .marquee-strip{margin-top:40px}
+
+  /* Sections */
+  .S{padding:56px 20px}
+  .H{font-size:clamp(28px,8vw,40px)}
+  .lead{font-size:15px}
+
+  /* Axiom */
+  .axiom{padding:44px 20px}
+  .axiom-q{font-size:clamp(18px,5vw,26px)}
+
+  /* Brazos */
+  .brazos-grid{gap:4px}
+  .brazo{padding:36px 24px}
+  .brazo-h{font-size:clamp(20px,5.5vw,28px)}
+  .brazo-q{font-size:14px;padding:16px 0}
+  .brazo-producto{margin-top:16px;padding:12px 14px}
+  .bp-name{font-size:17px}
+  .med-servicios{gap:0}
+  .ms-title{font-size:13px}
+
+  /* Problema */
+  .prob-layout{gap:36px}
+  .pc{padding:24px 20px}
+  .pc-h{font-size:24px}
+  .pc-p{font-size:12px}
+  .prob-note p{font-size:15px}
+
+  /* Stats */
+  .stat{padding:36px 24px}
+  .stat-val{font-size:clamp(40px,10vw,56px)}
+  .stat-lbl{font-size:12px}
+
+  /* Costo */
+  .cc{padding:36px 28px}
+  .cc-big{font-size:56px}
+  .cc-body{font-size:12px}
+
+  /* Propuesta */
+  .big-quote{font-size:clamp(18px,5vw,24px);padding:56px 0}
+  .noes{gap:0}
+  .nc{padding:32px 24px}
+  .nr{font-size:13px}
+
+  /* Trust bar */
+  .trust-bar{gap:20px;padding:28px 20px;flex-direction:column;align-items:flex-start}
+
+  /* Metodología */
+  .step{gap:16px;padding:20px 0}
+  .step-title{font-size:14px}
+  .step-body{font-size:12px}
+  .proceso-visual{padding:28px}
+  .pv-num{font-size:56px}
+
+  /* Medios detalle */
+  .mdc{padding:36px 28px}
+  .mdc-title{font-size:18px}
+  .mdc-body{font-size:12px}
+  .mdi{font-size:11px}
+  .med-cta-q{font-size:clamp(16px,4vw,20px)}
+
+  /* elementai section */
+  .H.H--ink{font-size:clamp(36px,10vw,52px)}
+
+  /* Señal */
+  .signal-box{padding:32px 24px}
+  .signal-h{font-size:clamp(20px,5.5vw,28px)}
+  .signal-p{font-size:13px}
+  .vc{padding:20px 18px}
+  .vc-them{font-size:9px}
+  .vc-claim,.vc-us{font-size:12px}
+
+  /* Calculadora */
+  .calc-right .cream-panel{padding:28px 24px}
+  .crb-num{font-size:44px}
+
+  /* FAQ */
+  .fq-q{font-size:16px}
+  .fq-body p{font-size:13px}
+
+  /* Contacto */
+  .fw{padding:28px 20px}
+  .f2c{grid-template-columns:1fr}
+  .paso{gap:12px;padding:14px 0}
+  .paso-t{font-size:13px}
+  .paso-s{font-size:11px}
+  .urgency{padding:16px 18px}
+  .urgency p{font-size:12px}
+
+  /* Sticky bar */
+  .sbar{padding:10px 16px}
+  .sbar-msg{font-size:13px}
+  .sbar-btns{flex-direction:column;gap:6px;width:100%}
+  .sbar-btns a{width:100%;justify-content:center;text-align:center}
+
+  /* Footer */
+  footer{padding:28px 20px;gap:12px}
+  .f-brand{font-size:18px}
+  .f-mid{font-size:11px}
+}
+
+/* ── SMALL TABLET (640–900px) ─────────────────────────────────────────── */
+@media(min-width:640px) and (max-width:900px){
+  .hero-h1{font-size:clamp(44px,7vw,72px)}
+  .hero-main{padding:110px 32px 0}
+  .S{padding:80px 32px}
+  .axiom{padding:60px 32px}
+  .brazo{padding:48px 36px}
+  .stat{padding:44px 32px}
+  .mdc{padding:44px 36px}
+  .signal-box{padding:44px 40px}
+  .fw{padding:36px 32px}
+  footer{padding:44px 32px}
+  .trust-bar{padding:32px 32px;gap:28px}
+}
+
+/* ── IPAD / MEDIUM (768–1024px) ───────────────────────────────────────── */
+@media(min-width:768px) and (max-width:1024px){
+  .hero-h1{font-size:clamp(52px,6.5vw,80px)}
+  .S{padding:88px 40px}
+  nav{padding:0 32px}
+  .hero-main{padding:120px 40px 0}
+}
+
+/* ── NAV: always hide links on mobile/tablet ──────────────────────────── */
+@media(max-width:1024px){
+  .nav-links{display:none!important}
+  nav{padding:0 24px}
+  .nav-btn{font-size:11px;padding:8px 14px}
+}
+
+/* ── Fix hero caps pills on very small screens ────────────────────────── */
+@media(max-width:400px){
+  .hero-h1{font-size:34px}
+  .hero-cap-sub{display:none}
+  .btn-gold,.btn-stroke{font-size:11px;padding:12px 16px}
+}
+
+/* ── Fix image/scrollbar issues ───────────────────────────────────────── */
+@media(max-width:768px){
+  .hero-vline,.hero-vdot{display:none}
+  .hero-deco{opacity:.015}
+  .body-after{display:none}
+  .marquee-strip{display:none}
+}
+
+/* ─── TALENTO HUMANO — SECCIÓN PRIORITARIA ─────────────────────────────── */
+.th-section{background:var(--void);padding:108px 52px;border-top:1px solid rgba(255,255,255,.07)}
+.th-header{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:72px}
+.th-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(94,170,112,.1);border:1px solid rgba(94,170,112,.2);padding:6px 16px;border-radius:2px;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--sageL);margin-bottom:18px}
+.th-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--sageL)}
+.th-lead{font-size:16px;font-weight:400;color:var(--mist);line-height:1.82;margin-bottom:28px}
+.th-right-label{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--fog);margin-bottom:16px}
+/* 4 productos en grid 2x2 */
+.th-products{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(255,255,255,.05)}
+.th-prod{padding:32px 28px;background:var(--void2);position:relative;overflow:hidden;transition:background .25s}
+.th-prod:hover{background:rgba(94,170,112,.06)}
+.th-prod::before{content:attr(data-code);position:absolute;right:12px;bottom:-8px;font-family:var(--serif);font-size:72px;font-weight:200;font-style:italic;opacity:.05;color:#fff;line-height:1;pointer-events:none}
+.th-prod-code{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:rgba(94,170,112,.12);border:1px solid rgba(94,170,112,.2);font-family:var(--mono);font-size:10px;font-weight:600;color:var(--sageL);margin-bottom:14px}
+.th-prod-name{font-family:var(--serif);font-size:20px;font-weight:300;color:#fff;letter-spacing:-.01em;margin-bottom:6px}
+.th-prod-tag{font-size:11px;color:var(--fog);margin-bottom:14px}
+.th-prod-desc{font-size:12px;color:var(--mist);line-height:1.72}
+.th-prod-link{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sageL);transition:gap .2s}
+.th-prod-link:hover{gap:10px}
+/* CTA strip */
+.th-cta-strip{margin-top:56px;padding:36px 44px;background:rgba(94,170,112,.07);border:1px solid rgba(94,170,112,.14);border-radius:2px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap}
+.th-cta-q{font-family:var(--serif);font-size:clamp(18px,2.2vw,26px);font-weight:200;font-style:italic;color:rgba(255,255,255,.75);max-width:620px;line-height:1.45}
+.th-cta-q em{font-style:normal;color:var(--sageL)}
+
+/* ─── MEDIOS — SECCIÓN SECUNDARIA ──────────────────────────────────────── */
+.med-section{background:var(--void2);padding:108px 52px;border-top:4px solid rgba(74,114,176,.25)}
+.med-header{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:64px}
+.med-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(74,114,176,.1);border:1px solid rgba(74,114,176,.2);padding:6px 16px;border-radius:2px;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blueL);margin-bottom:18px}
+.med-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--blueL)}
+.med-4grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid rgba(255,255,255,.07)}
+.med-card{padding:44px 40px;border-right:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);transition:background .2s}
+.med-card:hover{background:rgba(74,114,176,.06)}
+.med-card:nth-child(even){border-right:none}
+.med-card:nth-child(3),.med-card:nth-child(4){border-bottom:none}
+.med-card-n{font-family:var(--serif);font-size:32px;font-weight:200;font-style:italic;color:var(--blueL);opacity:.6;line-height:1;margin-bottom:12px}
+.med-card-title{font-family:var(--serif);font-size:22px;font-weight:300;color:#fff;letter-spacing:-.01em;margin-bottom:6px}
+.med-card-sub{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blueL);margin-bottom:18px}
+.med-card-desc{font-size:13px;color:var(--mist);line-height:1.78;margin-bottom:20px}
+.med-card-items{list-style:none}
+.med-card-items li{font-size:12px;color:rgba(255,255,255,.55);padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);display:flex;gap:10px;align-items:flex-start;line-height:1.5}
+.med-card-items li:last-child{border:none}
+.med-card-items li::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--blueL);flex-shrink:0;margin-top:6px}
+.med-bottom-row{display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;margin-top:52px;padding-top:40px;border-top:1px solid rgba(255,255,255,.07)}
+.med-bottom-q{font-family:var(--serif);font-size:clamp(16px,2vw,22px);font-weight:200;font-style:italic;color:rgba(255,255,255,.5);line-height:1.45;max-width:560px}
+
+/* ─── CLIENTES ──────────────────────────────────────────────────────────── */
+.clientes-section{background:var(--void3);padding:80px 52px;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07)}
+.clientes-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--fog);text-align:center;margin-bottom:44px}
+.clientes-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:rgba(255,255,255,.05)}
+.cliente-card{padding:32px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border-right:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);transition:background .2s;cursor:default;min-height:120px}
+.cliente-card:hover{background:rgba(255,255,255,.04)}
+.cliente-card:nth-child(4n){border-right:none}
+.cliente-card:nth-child(n+5){border-bottom:none}
+.cliente-logo{font-family:var(--serif);font-size:16px;font-weight:300;color:rgba(255,255,255,.5);letter-spacing:.02em;text-align:center;line-height:1.3;transition:color .2s}
+.cliente-card:hover .cliente-logo{color:rgba(255,255,255,.8)}
+.cliente-sector{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--fog);text-align:center}
+
+/* ─── RESPONSIVE — nuevas secciones ─────────────────────────────────────── */
+@media(max-width:900px){
+  .th-section,.med-section,.clientes-section{padding:64px 20px}
+  .th-header,.med-header{grid-template-columns:1fr;gap:40px}
+  .th-products{grid-template-columns:1fr;gap:2px}
+  .med-4grid{grid-template-columns:1fr}
+  .med-card{border-right:none!important}
+  .med-card:nth-child(n){border-bottom:1px solid rgba(255,255,255,.07)!important}
+  .med-card:last-child{border-bottom:none!important}
+  .clientes-grid{grid-template-columns:repeat(2,1fr)}
+  .cliente-card:nth-child(2n){border-right:none}
+  .cliente-card:nth-child(n+7){border-bottom:none}
+  .th-cta-strip{flex-direction:column;align-items:flex-start;padding:24px 20px}
+  .med-bottom-row{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:500px){
+  .clientes-grid{grid-template-columns:1fr 1fr}
+  .th-products{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="c-dot" id="cdot"></div>
+<div class="c-ring" id="cring"></div>
+
+<!-- ═══ NAV ═══════════════════════════════════════════════════════════════ -->
+<nav id="nav">
+  <a href="#inicio" class="nav-logo">
+    <span class="nav-logo-name">elemental</span><span class="logo-mark"><span class="lm-t"></span><span class="lm-b"></span></span>
+  </a>
+
+  <a href="#contacto" class="nav-btn">Hablar con nosotros →</a>
+</nav>
+
+<!-- ═══ HERO ═══════════════════════════════════════════════════════════════ -->
+<section class="hero" id="inicio">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-deco" aria-hidden="true">e</div>
+
+  <div class="hero-main">
+    <div>
+      <p class="hero-eyebrow"><span style="text-transform:none">elemental<span class="logo-mark logo-mark--sm"><span class="lm-t"></span><span class="lm-b"></span></span></span> · Bogotá, Colombia · 2026</p>
+      <h1 class="hero-h1">Los elementos<br>esenciales de<br>una organización<br><em>productiva<span class="gold-dot">.</span></em></h1>
+      <!-- DOS CAPÍTULOS — visibles desde el primer momento -->
+      <div class="hero-caps">
+        <a href="#talento" class="hero-cap hero-cap--th">
+          <span class="hero-cap-n">01</span>
+          <span class="hero-cap-name">Talento Humano</span>
+          <span class="hero-cap-sub">elementai · Diagnóstico · Design · ARIA</span>
+        </a>
+        <a href="#medios" class="hero-cap hero-cap--med">
+          <span class="hero-cap-n">02</span>
+          <span class="hero-cap-name">Medios &amp; Comunicación</span>
+          <span class="hero-cap-sub">Comunicación · Media · Outsourcing · Research</span>
+        </a>
+      </div>
+      <p class="hero-sub">Una empresa que no sabe quién es internamente no puede decirle al mundo quién es. elemental<span class="logo-mark logo-mark--sm"><span class="lm-t"></span><span class="lm-b"></span></span> opera en dos capítulos que se complementan: el talento que ejecuta lo que la marca promete, y los medios que comunican lo que la organización puede cumplir.</p>
+      <div class="hero-ctas">
+        <a href="#talento" class="btn-gold">Explorar los dos capítulos →</a>
+        <a href="#contacto" class="btn-stroke">Hablar con nosotros</a>
+      </div>
+    </div>
+    <div class="hero-metrics">
+      <p class="hero-m-tag">La oportunidad en números</p>
+      <div class="hero-m"><div class="hero-m-val">40%</div><div class="hero-m-lbl">de horas semanales sin valor estratégico</div></div>
+      <div class="hero-m"><div class="hero-m-val">~18%</div><div class="hero-m-lbl">revenue potencial perdido por fricción</div></div>
+      <div class="hero-m"><div class="hero-m-val">8–15x</div><div class="hero-m-lbl">retorno sobre el diagnóstico inicial</div></div>
+      <div class="hero-m"><div class="hero-m-val">30d</div><div class="hero-m-lbl">primeros resultados medibles</div></div>
+    </div>
+  </div>
+
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span class="m-item">Talento Humano<span class="dot">·</span>elementai</span>
+      <span class="m-item">Comunicación<span class="dot">·</span>Planning &amp; Buying</span>
+      <span class="m-item">Media<span class="dot">·</span>Medios Digitales</span>
+      <span class="m-item">Outsourcing<span class="dot">·</span>Auditoría &amp; Negociación</span>
+      <span class="m-item">Research<span class="dot">·</span>Trade Marketing &amp; BTL</span>
+      <span class="m-item">Dos capítulos<span class="dot">·</span>Un solo sistema</span>
+      <span class="m-item">Talento Humano<span class="dot">·</span>elementai</span>
+      <span class="m-item">Comunicación<span class="dot">·</span>Planning &amp; Buying</span>
+      <span class="m-item">Media<span class="dot">·</span>Medios Digitales</span>
+      <span class="m-item">Outsourcing<span class="dot">·</span>Auditoría &amp; Negociación</span>
+      <span class="m-item">Research<span class="dot">·</span>Trade Marketing &amp; BTL</span>
+      <span class="m-item">Dos capítulos<span class="dot">·</span>Un solo sistema</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ AXIOM ══════════════════════════════════════════════════════════════ -->
+<div class="axiom">
+  <div class="axiom-body" data-r>
+    <p class="axiom-q">"Una empresa que no sabe quién es internamente<br>no puede decirle al mundo <em>quién es.</em>"</p>
+    <p class="axiom-attr">— Principio fundacional · elemental<span class="logo-mark logo-mark--sm"><span class="lm-t"></span><span class="lm-b"></span></span> · Bogotá, Colombia</p>
+  </div>
+</div>
+
+<!-- ═══ PROBLEMA ══════════════════════════════════════════════════════════ -->
+<section class="S S--dk2">
+  <div class="W">
+    <div class="prob-layout">
+      <div class="prob-pin">
+        <p class="kicker kicker-gold" data-r>El problema</p>
+        <h2 class="H" data-r>Tres conversaciones<br>que nunca<br><em>se tocan.</em></h2>
+        <p class="lead" data-r>Las organizaciones gestionan estrategia, talento e IA como proyectos separados. El costo de esa desconexión aparece en el P&L mucho antes de que alguien lo nombre.</p>
+        <div class="prob-note" data-r>
+          <p>"Una empresa con estrategia, talento e IA desconectados invierte tres veces y obtiene un tercio."</p>
+        </div>
+      </div>
+      <div class="prob-cards">
+        <div class="pc" data-r>
+          <div class="pc-n">01 / Conversación aislada</div>
+          <h3 class="pc-h">Estrategia</h3>
+          <p class="pc-p">Define qué valor crear en el mercado. Vive en el C-Suite. Rara vez baja a cómo trabaja la gente que debe ejecutarla. Los OKRs existen, pero nadie conecta las horas reales del equipo a esos objetivos.</p>
+          <span class="pc-tag">El norte sin tracción</span>
+        </div>
+        <div class="pc" data-r data-r-d="1">
+          <div class="pc-n">02 / Conversación aislada</div>
+          <h3 class="pc-h">Talento</h3>
+          <p class="pc-p">Las personas que ejecutan. Gestionadas por RRHH. Nunca conectadas al roadmap estratégico real ni a las herramientas que podrían multiplicar su capacidad sin sumar más headcount.</p>
+          <span class="pc-tag">Capacidad subutilizada</span>
+        </div>
+        <div class="pc" data-r data-r-d="2">
+          <div class="pc-n">03 / Conversación aislada</div>
+          <h3 class="pc-h">IA</h3>
+          <p class="pc-p">Herramientas compradas, pilotos lanzados, licencias activas. Nadie diseñó cómo se integran al trabajo diario ni cómo se mide su impacto en los resultados que importan.</p>
+          <span class="pc-tag">Inversión sin ROI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS BAND ════════════════════════════════════════════════════════ -->
+<div class="stats-band" style="background:var(--void)">
+  <div class="stat" data-r><div class="stat-val" data-count="40" data-suffix="%">40%</div><div class="stat-lbl">de horas semanales atrapadas en trabajo sin valor estratégico</div><div class="stat-src">empresas 50–200 personas</div></div>
+  <div class="stat" data-r data-r-d="1"><div class="stat-val">~18%</div><div class="stat-lbl">del revenue potencial perdido por fricción operativa — no por precio ni calidad</div><div class="stat-src">churn en empresas de servicio</div></div>
+  <div class="stat" data-r data-r-d="2"><div class="stat-val">2x</div><div class="stat-lbl">el costo por proceso conforme crece el equipo sin rediseño organizacional</div><div class="stat-src">efecto de escala sin diseño</div></div>
+  <div class="stat" data-r data-r-d="3"><div class="stat-val">30d</div><div class="stat-lbl">para los primeros resultados medibles desde el inicio de la implementación.</div><div class="stat-src">intervención real</div></div>
+</div>
+
+<!-- ═══ COSTO ══════════════════════════════════════════════════════════════ -->
+<section class="S S--dk2">
+  <div class="W">
+    <p class="kicker kicker-gold" data-r>El costo de no actuar</p>
+    <h2 class="H" data-r>Lo que cuesta cada semana<br><em>sin intervención.</em></h2>
+    <p class="lead" data-r>Estos no son costos de eficiencia operativa. Son costos estratégicos que ya están en el P&L — aunque nadie los haya nombrado así todavía.</p>
+    <div class="costo-grid" data-r>
+      <div class="cc cc-r"><div class="cc-bar"></div><div class="cc-big">~18%</div><div class="cc-label">Revenue potencial perdido</div><p class="cc-body">El 70% del churn en empresas de servicio ocurre por fricción operativa — el cliente percibe las demoras internas aunque nunca vea los procesos que las generan.</p></div>
+      <div class="cc cc-a"><div class="cc-bar"></div><div class="cc-big">40%</div><div class="cc-label">Horas sin retorno estratégico</div><p class="cc-body">4 de cada 10 horas semanales van a coordinación, retrabajo o reportes que nadie usa para decidir. El problema escala con cada persona que se suma al equipo.</p></div>
+      <div class="cc cc-g"><div class="cc-bar"></div><div class="cc-big">2x</div><div class="cc-label">Costo al escalar sin diseño</div><p class="cc-body">Los procesos que funcionaban con 15 personas colapsan con 60. Cada contrato nuevo sin rediseño del proceso amplifica la ineficiencia existente.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROPUESTA ═════════════════════════════════════════════════════════ -->
+<section class="S">
+  <div class="W">
+    <div data-r>
+      <blockquote class="big-quote">"Diseñamos cómo el talento y la IA trabajan juntos al servicio de la estrategia — y lo medimos en <em>resultados de negocio</em>, no en adopción tecnológica."</blockquote>
+    </div>
+    <div class="noes" data-r>
+      <div class="nc nc--no">
+        <div class="nc-h nc-h--no">elementai no es</div>
+        <div class="nr"><span class="nd nd-no"></span>Una iniciativa de RRHH sin mandato estratégico</div>
+        <div class="nr"><span class="nd nd-no"></span>Un proyecto de transformación digital de 18 meses</div>
+        <div class="nr"><span class="nd nd-no"></span>Un programa de capacitación en IA con certificado</div>
+        <div class="nr"><span class="nd nd-no"></span>Consultoría facturada por horas de asesoría</div>
+        <div class="nr"><span class="nd nd-no"></span>Una solución tecnológica instalada sobre procesos rotos</div>
+      </div>
+      <div class="nc nc--yes">
+        <div class="nc-h nc-h--yes">elementai es</div>
+        <div class="nr"><span class="nd nd-yes"></span>Rediseño operativo de la capacidad productiva real</div>
+        <div class="nr"><span class="nd nd-yes"></span>Diseño que arranca desde la estrategia del negocio</div>
+        <div class="nr"><span class="nd nd-yes"></span>Medido en horas recuperadas, ahorro en USD y variación de KPIs</div>
+        <div class="nr"><span class="nd nd-yes"></span>Cobrado por proyecto y resultado, nunca por horas</div>
+        <div class="nr"><span class="nd nd-yes"></span>Primeros resultados observables en 30 días</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TRUST BAR ═════════════════════════════════════════════════════════ -->
+<div class="trust-bar">
+  <div class="ti"><div class="ti-icon">✓</div>Precio fijo por resultado — nunca por horas</div>
+  <div class="ti"><div class="ti-icon">✓</div>Diagnóstico inicial sin costo ni compromiso</div>
+  <div class="ti"><div class="ti-icon">✓</div>Business case para el CFO incluido en el Scan</div>
+  <div class="ti"><div class="ti-icon">✓</div>Máximo 3 proyectos activos — garantía de dedicación</div>
+  <div class="ti"><div class="ti-icon">✓</div>Resultados medibles en 30 días</div>
+</div>
+
+<!-- ═══ CÓMO TRABAJAMOS ════════════════════════════════════════════════════ -->
+<section class="S S--dk2" id="proceso">
+  <div class="W">
+    <p class="kicker kicker-gold" data-r>Metodología</p>
+    <h2 class="H" data-r>Cómo trabajamos.</h2>
+    <p class="lead" data-r>Un proceso diseñado para producir evidencia irrefutable antes de cualquier inversión mayor. Cada paso tiene valor independiente.</p>
+    <div class="proceso-grid">
+      <div class="proceso-steps" data-r>
+        <div class="step">
+          <div class="step-n">1</div>
+          <div>
+            <div class="step-title">Exploración express — 90 min, sin costo</div>
+            <p class="step-body">Conversación diagnóstica con el equipo ejecutivo. Identificamos en cuál de las tres conversaciones está el mayor costo oculto y si las condiciones son correctas para intervenir.</p>
+            <span class="step-tag">Sin compromiso</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">2</div>
+          <div>
+            <div class="step-title">Scan — diagnóstico estratégico · 3 semanas</div>
+            <p class="step-body">Sprint de inventario real. Mapeamos cómo la estrategia se está ejecutando, dónde el talento está subutilizado y dónde la IA puede asumir carga. Entregamos business case con impacto proyectado en USD.</p>
+            <span class="step-tag">Diagnóstico incluido</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">3</div>
+          <div>
+            <div class="step-title">Design — rediseño operativo · 6–10 semanas</div>
+            <p class="step-body">Con el diagnóstico en mano, rediseñamos 3–5 procesos críticos integrando IA como parte del flujo real — no como herramienta paralela. Medición antes y después en tiempo, calidad y resultados.</p>
+            <span class="step-tag">Intervención real</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">4</div>
+          <div>
+            <div class="step-title">Accelerate + Pulse — equipos y medición continua</div>
+            <p class="step-body">Cohortes multidisciplinarias que aprenden operando con IA en sus propios proyectos reales. Dashboard mensual de capacidad productiva que correlaciona talento + IA con los KPIs del negocio.</p>
+            <span class="step-tag">Precio fijo · Recurrencia SaaS</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="proceso-visual" data-r>
+          <div class="pv-tag">Regla de oro elementai</div>
+          <div class="pv-num" style="font-size:48px;letter-spacing:-.02em">90 min</div>
+          <div class="pv-label">duración de la exploración inicial</div>
+          <div class="pv-note">El diagnóstico express no tiene costo porque estamos convencidos de que los datos que encontramos hablan solos. Si no hay caso de negocio, lo decimos antes de que inviertas un peso.</div>
+        </div>
+        <div style="margin-top:16px;border:1px solid rgba(255,255,255,.07);border-radius:2px;padding:32px" data-r>
+          <p class="kicker kicker-sage" style="margin-bottom:12px">Seis fuentes de diagnóstico</p>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;color:var(--mist);line-height:1.6">
+            <div style="display:flex;gap:10px"><span style="color:var(--sageL);flex-shrink:0;font-family:var(--mono)">F1</span><span>OKRs y metas estratégicas — qué objetivos existen y cómo se conectan al trabajo real</span></div>
+            <div style="display:flex;gap:10px"><span style="color:var(--sageL);flex-shrink:0;font-family:var(--mono)">F2</span><span>P&L y datos financieros — costo por proceso, margen por área, headcount vs valor</span></div>
+            <div style="display:flex;gap:10px"><span style="color:var(--sageL);flex-shrink:0;font-family:var(--mono)">F3</span><span>Voz del cliente — churn segmentado, NPS de detractores, motivo real de abandono</span></div>
+            <div style="display:flex;gap:10px"><span style="color:var(--sageL);flex-shrink:0;font-family:var(--mono)">F4</span><span>Tiempo real invertido — log de 5 días por área, bloques de 30 minutos</span></div>
+            <div style="display:flex;gap:10px"><span style="color:var(--sageL);flex-shrink:0;font-family:var(--mono)">F5</span><span>Decisiones ejecutivas — reportes críticos vs redundantes vs huérfanos</span></div>
+            <div style="display:flex;gap:10px"><span style="color:var(--sageL);flex-shrink:0;font-family:var(--mono)">F6</span><span>Fricción operativa — handoffs fallidos, retrabajo, escalaciones innecesarias</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     CAPÍTULO 01 — TALENTO HUMANO (PRIORIDAD)
+════════════════════════════════════════════════════════════════════════ -->
+<section class="th-section" id="talento">
+  <div class="W">
+    <div class="th-header">
+      <div>
+        <div class="th-badge" data-r>01 · Capítulo Talento Humano</div>
+        <h2 class="H" data-r>¿El equipo que tienes<br>puede cumplir lo que<br><em>el negocio necesita?</em></h2>
+        <p class="th-lead" data-r>No gestionamos personas — construimos capacidad productiva. Diseñamos cómo el talento, los procesos y la IA trabajan juntos al servicio de la estrategia. Medido en resultados de negocio, no en adopción tecnológica.</p>
+        <p class="th-lead" data-r>Nuestro producto principal <strong style="color:#fff;font-weight:400">elementai</strong> convierte esa pregunta en un número, un mapa de brechas y una hoja de ruta ejecutable en 90 días.</p>
+      </div>
+      <div data-r>
+        <p class="th-right-label">Lo que produce elementai</p>
+        <div class="th-products">
+
+          <div class="th-prod" data-code="Sc">
+            <div class="th-prod-code">Sc</div>
+            <div class="th-prod-name">Scan</div>
+            <div class="th-prod-tag">Diagnóstico estratégico · 8 días</div>
+            <p class="th-prod-desc">Mapea cómo la estrategia se ejecuta, dónde el talento está subutilizado y dónde la IA puede asumir carga real. Entrega un Índice de Preparación, mapa de brechas y hoja de ruta con impacto proyectado en negocio.</p>
+            <a href="#contacto" class="th-prod-link">Agendar Scan →</a>
+          </div>
+
+          <div class="th-prod" data-code="Sp">
+            <div class="th-prod-code">Sp</div>
+            <div class="th-prod-name">Scan Pro</div>
+            <div class="th-prod-tag">Diagnóstico + evaluación · 10 días</div>
+            <p class="th-prod-desc">Todo el Scan más batería de valoración de talento (STAR, SJT, Simulación, Evidencia). Identifica no solo la brecha sino quién puede cerrarla — con reporte individual y plan de desarrollo a 90 días por rol.</p>
+            <a href="#contacto" class="th-prod-link">Agendar Scan Pro →</a>
+          </div>
+
+          <div class="th-prod" data-code="De" style="background:rgba(94,170,112,.06);border:1px solid rgba(94,170,112,.15)">
+            <div class="th-prod-code" style="background:var(--sage);color:#fff;border-color:var(--sage)">De</div>
+            <div class="th-prod-name">Design</div>
+            <div class="th-prod-tag">Rediseño operativo · 6–10 semanas</div>
+            <p class="th-prod-desc">Intervención real sobre 3–5 procesos críticos de un área. IA integrada al flujo de trabajo — no como herramienta paralela. Medición antes/después en tiempo, calidad y resultados. KPI de éxito: reducción ≥20% en tiempo.</p>
+            <a href="#contacto" class="th-prod-link">Hablar sobre Design →</a>
+          </div>
+
+          <div class="th-prod" data-code="Ac">
+            <div class="th-prod-code">Ac</div>
+            <div class="th-prod-name">Accelerate</div>
+            <div class="th-prod-tag">Cohortes · 8 semanas · proyectos reales</div>
+            <p class="th-prod-desc">Las personas aprenden operando con IA en sus propios proyectos reales. El trabajo del programa es trabajo real de la empresa. Meta: ≥70% adopción activa a 30 días y 1 caso con impacto medible por cohorte.</p>
+            <a href="#contacto" class="th-prod-link">Hablar sobre Accelerate →</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA strip -->
+    <div class="th-cta-strip" data-r>
+      <p class="th-cta-q">"¿Cuánto le cuesta a tu empresa cada semana que el talento, la IA y la estrategia operan como conversaciones separadas?"</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;flex-shrink:0">
+        <a href="#calcula" class="btn-stroke">Calcular el impacto →</a>
+        <a href="#contacto" class="btn-gold" style="border-radius:2px">Hablar con nosotros →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     CLIENTES
+════════════════════════════════════════════════════════════════════════ -->
+<section class="clientes-section" id="clientes">
+  <div class="W">
+    <p class="clientes-label" data-r>Empresas que han confiado en elemental<span class="logo-mark logo-mark--sm"><span class="lm-t"></span><span class="lm-b"></span></span></p>
+    <div class="clientes-grid" data-r>
+
+      <div class="cliente-card">
+        <svg width="100" height="28" viewBox="0 0 100 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="50" y="20" font-family="Georgia,serif" font-size="16" font-weight="400" fill="rgba(255,255,255,0.55)" text-anchor="middle" letter-spacing="1">PriceSmart</text>
+        </svg>
+        <div class="cliente-sector">Retail · Membresías</div>
+      </div>
+
+      <div class="cliente-card">
+        <svg width="100" height="28" viewBox="0 0 100 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="50" y="20" font-family="Georgia,serif" font-size="14" font-weight="400" fill="rgba(255,255,255,0.55)" text-anchor="middle" letter-spacing=".5">RedPapaz</text>
+        </svg>
+        <div class="cliente-sector">Social · Educación</div>
+      </div>
+
+      <div class="cliente-card">
+        <svg width="110" height="28" viewBox="0 0 110 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="55" y="20" font-family="Georgia,serif" font-size="15" font-weight="300" fill="rgba(255,255,255,0.55)" text-anchor="middle" letter-spacing="2">LIQUI MOLY</text>
+        </svg>
+        <div class="cliente-sector">Automotriz · Lubricantes</div>
+      </div>
+
+      <div class="cliente-card">
+        <svg width="80" height="28" viewBox="0 0 80 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="40" y="20" font-family="Georgia,serif" font-size="17" font-weight="400" fill="rgba(255,255,255,0.55)" text-anchor="middle" letter-spacing="1">EAN</text>
+        </svg>
+        <div class="cliente-sector">Educación Superior</div>
+      </div>
+
+      <div class="cliente-card">
+        <svg width="120" height="32" viewBox="0 0 120 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="60" y="14" font-family="Georgia,serif" font-size="11" font-weight="400" fill="rgba(255,255,255,0.55)" text-anchor="middle" letter-spacing=".5">Alcaldía de</text>
+          <text x="60" y="28" font-family="Georgia,serif" font-size="11" font-weight="400" fill="rgba(255,255,255,0.55)" text-anchor="middle" letter-spacing=".5">Santiago de Cali</text>
+        </svg>
+        <div class="cliente-sector">Sector Público</div>
+      </div>
+
+      <div class="cliente-card">
+        <svg width="110" height="28" viewBox="0 0 110 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="55" y="20" font-family="Georgia,serif" font-size="15" font-weight="300" fill="rgba(255,255,255,0.55)" text-anchor="middle" letter-spacing="1">AXA Colpatria</text>
+        </svg>
+        <div class="cliente-sector">Seguros · Finanzas</div>
+      </div>
+
+      <div class="cliente-card">
+        <svg width="100" height="28" viewBox="0 0 100 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="50" y="20" font-family="Georgia,serif" font-size="15" font-weight="400" fill="rgba(255,255,255,0.55)" text-anchor="middle" letter-spacing="1">FNA Ahorro</text>
+        </svg>
+        <div class="cliente-sector">Ahorro · Vivienda</div>
+      </div>
+
+      <div class="cliente-card">
+        <svg width="90" height="28" viewBox="0 0 90 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="45" y="20" font-family="Georgia,serif" font-size="16" font-weight="300" fill="rgba(255,255,255,0.55)" text-anchor="middle" letter-spacing="1">Huawei</text>
+        </svg>
+        <div class="cliente-sector">Tecnología · Telecomunicaciones</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SEÑAL / CLIENTE ════════════════════════════════════════════════════ -->
+<section class="S" id="cliente">
+  <div class="W">
+    <div class="signal-box" data-r>
+      <div class="signal-label">La señal más clara</div>
+      <h2 class="signal-h">Tu empresa ya compró Copilot o ChatGPT Enterprise — y no está viendo el ROI esperado.</h2>
+      <p class="signal-p">Eso no es un problema de herramienta. Es un problema de integración. <strong>La IA no produce ROI cuando se instala sobre una organización donde la estrategia, el talento y los procesos no están diseñados para trabajar juntos.</strong> elementai resuelve exactamente eso — empezando por medir el costo real de la desconexión.</p>
+      <div class="vs-grid">
+        <div class="vc"><div class="vc-them">Consultoras digitales</div><div class="vc-claim">Venden tecnología. No integran talento. El ROI queda en la presentación inicial.</div><div class="vc-us">Integramos estrategia, talento e IA en un sistema. Medimos en resultados de negocio, no en adopción.</div></div>
+        <div class="vc"><div class="vc-them">Firmas de RRHH</div><div class="vc-claim">Venden personas. No integran IA. La estrategia queda fuera de la conversación.</div><div class="vc-us">Cada decisión de talento conecta a un objetivo de negocio. La estrategia es el punto de partida, no un supuesto.</div></div>
+        <div class="vc"><div class="vc-them">Capacitadoras en IA</div><div class="vc-claim">Venden cursos. No miden resultados. La adopción es el éxito declarado.</div><div class="vc-us">Medimos ROI en horas recuperadas, reducción de costos y variación en KPIs de negocio — nunca en usuarios capacitados.</div></div>
+      </div>
+    </div>
+    <div class="cliente-pair" data-r>
+      <div class="cpcard"><p class="kicker kicker-sage">Cliente ideal</p><p><strong>200–1,500 empleados.</strong> Servicios profesionales · Fintech · Salud privada · Tech en crecimiento. Empresas donde la fricción operativa se convierte directamente en pérdida de clientes y margen.</p></div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CALCULADORA ════════════════════════════════════════════════════════ -->
+<section class="S S--dk2" id="calcula">
+  <div class="W">
+    <div class="calc-layout">
+      <div>
+        <p class="kicker kicker-sage" data-r>Calcula tu oportunidad</p>
+        <h2 class="H" data-r>¿Cuánto vale<br>recuperar esa<br><em>capacidad?</em></h2>
+        <p class="lead" data-r>Ajusta los sliders a tu realidad. El Scan produce el cálculo exacto con tus datos reales — en 3 semanas, con business case para el directorio. La exploración inicial no tiene costo.</p>
+        <div style="margin-top:36px;padding-top:28px;border-top:1px solid rgba(255,255,255,.07)" data-r>
+          <p style="font-family:var(--serif);font-size:19px;font-weight:200;font-style:italic;color:rgba(255,255,255,.5);line-height:1.55">"El primer número que produce el diagnóstico no es una proyección. Es el cálculo de lo que ya está ocurriendo y nadie había medido."</p>
+        </div>
+      </div>
+      <div class="calc-right" data-r>
+        <div class="cream-panel">
+          <div class="cf"><label>Personas en el equipo <span class="cv" id="vp">80</span></label><input type="range" id="rp" min="20" max="800" step="10" value="80" oninput="calcular()"></div>
+          <div class="cf"><label>Costo promedio / hora (USD) <span class="cv" id="vc">$15</span></label><input type="range" id="rc" min="5" max="80" step="1" value="15" oninput="calcular()"></div>
+          <div class="cf"><label>Horas semanales / persona <span class="cv" id="vh">40h</span></label><input type="range" id="rh" min="20" max="50" step="1" value="40" oninput="calcular()"></div>
+          <div class="calc-result-box">
+            <div class="crb-lbl">Capacidad recuperable estimada</div>
+            <div class="crb-num" id="cnum" style="font-size:28px;line-height:1.3">Ver en el Scan</div>
+            <div class="crb-sub">El diagnóstico produce el cálculo exacto con tus datos reales</div>
+            <div class="crb-disc">El primer número concreto aparece en la exploración gratuita de 90 minutos.</div>
+          </div>
+        </div>
+        <a href="#contacto" class="btn-gold" style="margin-top:16px;width:100%;justify-content:center;border-radius:2px;display:flex">Ver mi estimación real — primer paso gratuito →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ════════════════════════════════════════════════════════════════ -->
+<section class="S S--cream" id="faq">
+  <div class="W">
+    <div class="faq-layout">
+      <div class="faq-sticky">
+        <p class="kicker kicker-dk" data-r>Preguntas frecuentes</p>
+        <h2 class="H H--ink" data-r>Lo que suelen<br>preguntar antes<br>de empezar.</h2>
+        <p class="lead lead--dk" data-r>Las mismas preguntas que suelen aparecer en la primera conversación. Las respondemos aquí para que llegues con el contexto que necesitas.</p>
+        <a href="#contacto" class="arrow-link" style="color:var(--sage);margin-top:28px;display:inline-flex" data-r>¿Tienes otra pregunta? Escríbenos →</a>
+      </div>
+      <div class="faq-list" data-r>
+        <div class="fq" onclick="toggleFaq(this)">
+          <div class="fq-hdr"><span class="fq-q">¿Por qué no cobran por horas si eso es lo que hacen los consultores?</span><span class="fq-icon">+</span></div>
+          <div class="fq-body"><p>Porque cobrar por horas alinea nuestros incentivos con la cantidad de trabajo, no con la calidad del resultado. Si cobramos por proyecto y resultado, nuestro interés es producir el mejor resultado en el menor tiempo posible — lo que te conviene a ti, no a nosotros. Además, el precio por proyecto cambia quién firma la decisión: un CFO puede aprobar un precio fijo por un diagnóstico concreto; esa misma conversación se vuelve imposible si está cotizada en "X horas de consultor a Y dólares por hora".</p></div>
+        </div>
+        <div class="fq" onclick="toggleFaq(this)">
+          <div class="fq-hdr"><span class="fq-q">¿Cómo garantizan que habrá resultados en 30 días?</span><span class="fq-icon">+</span></div>
+          <div class="fq-body"><p>No garantizamos resultados sin datos propios — nadie debería hacerlo. Lo que sí hacemos es estructurar el proceso para que los primeros tres quick wins sean observable en los primeros 30 días de implementación. Estos quick wins se seleccionan durante el Scan con tres criterios: alto retorno, bajo riesgo de implementación y datos medibles antes/después. Si después del Scan no identificamos al menos tres procesos que cumplan esos criterios, te decimos que no es el momento de continuar.</p></div>
+        </div>
+        <div class="fq" onclick="toggleFaq(this)">
+          <div class="fq-hdr"><span class="fq-q">Somos una empresa de 60 personas, ¿somos demasiado pequeños?</span><span class="fq-icon">+</span></div>
+          <div class="fq-body"><p>El tamaño mínimo que nos permite producir un business case robusto son 50 personas — por debajo de eso, los números del diagnóstico no tienen suficiente superficie para ser significativos. Con 60 personas, el Scan tiene sentido si hay al menos 3–4 áreas con procesos estructurados y el CEO o COO está directamente involucrado. La señal más importante no es el número de personas sino si la persona que toma la decisión de invertir tiene claridad sobre qué resultado necesita y disposición a ser honesta sobre dónde está el problema real.</p></div>
+        </div>
+        <div class="fq" onclick="toggleFaq(this)">
+          <div class="fq-hdr"><span class="fq-q">¿En qué se diferencia esto de lo que ya intentamos con otras consultoras?</span><span class="fq-icon">+</span></div>
+          <div class="fq-body"><p>La diferencia más común que encontramos es el punto de partida. La mayoría de los proyectos empiezan por la herramienta ("vamos a implementar Copilot") o por el proceso ("vamos a rediseñar el flujo de aprobaciones") — sin preguntar primero si ese proceso conecta a algún objetivo estratégico real. Nosotros empezamos por la estrategia del negocio: ¿qué valor necesita crear esta empresa en el mercado? ¿Qué procesos contribuyen a ese valor? ¿Cuáles lo obstaculizan? ¿Cuáles no deberían existir? Eso cambia radicalmente qué se toca y en qué orden.</p></div>
+        </div>
+        <div class="fq" onclick="toggleFaq(this)">
+          <div class="fq-hdr"><span class="fq-q">¿Qué pasa si el diagnóstico no encuentra suficiente oportunidad?</span><span class="fq-icon">+</span></div>
+          <div class="fq-body"><p>Lo decimos. Hemos tenido exploraciones donde el problema declarado era "queremos implementar IA" y el problema real era que los procesos eran sanos y el equipo estaba bien dimensionado — en esos casos, la recomendación fue no intervenir y explicar por qué. Preferimos perder una venta antes que generar un caso de negocio que no se sostiene con datos reales. Esa transparencia es parte del modelo — y es por qué los clientes que sí avanzan tienen tasas de conversión de Scan a Design por encima del 60%.</p></div>
+        </div>
+        <div class="fq" onclick="toggleFaq(this)">
+          <div class="fq-hdr"><span class="fq-q">¿Por qué máximo 3 proyectos activos?</span><span class="fq-icon">+</span></div>
+          <div class="fq-body"><p>Porque somos dos personas que operan exactamente como lo que vendemos: con IA como parte de nuestra capacidad, no como herramienta decorativa. El límite de 3 proyectos no es una restricción de recursos — es una garantía de calidad. Cada engagement que tomamos produce aprendizajes documentados en 6 capas que mejoran el siguiente. Escalar antes de tener esa metodología sólida sería exactamente el error que le decimos a los clientes que no cometan.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     CAPÍTULO 02 — MEDIOS & COMUNICACIÓN
+════════════════════════════════════════════════════════════════════════ -->
+<section class="med-section" id="medios-detalle">
+  <div class="W">
+    <div class="med-header">
+      <div>
+        <div class="med-badge" data-r>02 · Capítulo Medios &amp; Comunicación</div>
+        <h2 class="H" data-r>¿Cómo llegamos<br>al cliente correcto<br><em>en el momento exacto?</em></h2>
+      </div>
+      <div data-r>
+        <p class="lead" style="color:var(--mist)">Planificamos, compramos, auditamos y medimos medios — offline y digitales — con criterio estratégico y transparencia total. Sin conflictos de interés. Cuatro líneas de servicio que cubren el ciclo completo de la inversión en comunicación.</p>
+      </div>
+    </div>
+
+    <div class="med-4grid" data-r>
+
+      <!-- I -->
+      <div class="med-card">
+        <div class="med-card-n">I</div>
+        <div class="med-card-title">Comunicación</div>
+        <div class="med-card-sub">Planning &amp; Buying</div>
+        <p class="med-card-desc">Diseñamos la estrategia de medios que conecta el mensaje correcto con la audiencia correcta en el momento preciso — y la ejecutamos con poder de compra real. No separamos el pensar del hacer, ni el plan de la negociación.</p>
+        <ul class="med-card-items">
+          <li>Estrategia de comunicación integrada 360°</li>
+          <li>Planeación de medios anclada en objetivos de negocio</li>
+          <li>Compra y negociación directa de espacios publicitarios</li>
+          <li>Optimización continua del presupuesto y mix de medios</li>
+          <li>Medición de impacto y ajuste en tiempo real por canal</li>
+        </ul>
+      </div>
+
+      <!-- II -->
+      <div class="med-card">
+        <div class="med-card-n">II</div>
+        <div class="med-card-title">Media &amp; Medios Digitales</div>
+        <div class="med-card-sub">Offline · Digital · Integrado</div>
+        <p class="med-card-desc">Operamos en todo el ecosistema de medios: televisión, radio, prensa, exterior, digital y móvil. Planificamos de forma integrada porque el consumidor no distingue entre offline y online — y la estrategia tampoco debería hacerlo.</p>
+        <ul class="med-card-items">
+          <li>TV, radio, prensa escrita y medios impresos</li>
+          <li>Exterior y vía pública — OOH y DOOH</li>
+          <li>Medios digitales: display, video online, programático</li>
+          <li>Search, social media pagada y performance digital</li>
+          <li>Planificación cross-media y atribución de resultados</li>
+        </ul>
+      </div>
+
+      <!-- III -->
+      <div class="med-card">
+        <div class="med-card-n">III</div>
+        <div class="med-card-title">Outsourcing</div>
+        <div class="med-card-sub">Auditoría · Planeación · Negociación · Reporting</div>
+        <p class="med-card-desc">Actuamos como el departamento de medios que tu empresa no tiene — o como el respaldo independiente que verifica y optimiza lo que tu agencia actual hace. Transparencia total en cada peso invertido, sin conflictos de interés con ningún medio.</p>
+        <ul class="med-card-items">
+          <li>Auditoría independiente de inversión en medios y contratos</li>
+          <li>Planeación estratégica de medios alineada a objetivos</li>
+          <li>Negociación directa con medios y proveedores</li>
+          <li>Reporting ejecutivo mensual de desempeño e inversión</li>
+          <li>Supervisión y evaluación de agencias de medios</li>
+        </ul>
+      </div>
+
+      <!-- IV -->
+      <div class="med-card">
+        <div class="med-card-n">IV</div>
+        <div class="med-card-title">Research</div>
+        <div class="med-card-sub">Trade Marketing · Merchandising · Promociones · BTL</div>
+        <p class="med-card-desc">Donde el mensaje toca al consumidor en el punto de decisión de compra. Diseñamos y ejecutamos la presencia de marca en el canal — desde la estrategia de trade hasta la ejecución táctica en el punto de venta, con medición de efectividad real.</p>
+        <ul class="med-card-items">
+          <li>Estrategia y ejecución integral de trade marketing</li>
+          <li>Diseño, producción e implementación de merchandising</li>
+          <li>Activaciones promocionales en punto de venta</li>
+          <li>Campañas BTL, experiencias de marca y eventos</li>
+          <li>Medición de efectividad, sell-out y ROI en canal</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="med-bottom-row" data-r>
+      <p class="med-bottom-q">"¿Qué vale comunicar si la organización no puede sostener lo que promete?"</p>
+      <a href="#contacto" class="btn-stroke">Hablar sobre Medios &amp; Comunicación →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACTO ══════════════════════════════════════════════════════════ -->
+<section class="S" id="contacto">
+  <div class="W">
+    <div class="contact-layout">
+      <div>
+        <p class="kicker kicker-gold" data-r>Primer paso</p>
+        <h2 class="H" data-r>El diagnóstico<br><em>no cuesta nada.</em></h2>
+        <p class="contact-p" data-r>En 90 minutos estimamos cuánta capacidad está mal distribuida en tu empresa y cuánto vale recuperarla. Sin compromiso de continuar — si no hay caso de negocio, lo decimos.</p>
+        <div class="pasos" data-r>
+          <div class="paso"><div class="paso-n">1</div><div><div class="paso-t">Exploración express — 90 min, sin costo</div><div class="paso-s">Estimación de brecha y oportunidad de capacidad</div></div></div>
+          <div class="paso"><div class="paso-n">2</div><div><div class="paso-t">Revisión de resultados — 30 min</div><div class="paso-s">Solo si quieres explorar la intervención completa</div></div></div>
+          <div class="paso"><div class="paso-n">3</div><div><div class="paso-t">Scan completo — 3 semanas</div><div class="paso-s">Business case para el directorio con números reales</div></div></div>
+        </div>
+        <div class="urgency" data-r>
+          <h4>Capacidad limitada · máximo 3 proyectos activos</h4>
+          <p>Trabajamos con un número máximo de clientes activos para garantizar la calidad de cada resultado. Agenda tu exploración para reservar espacio en el próximo ciclo — los espacios se llenan por trimestre.</p>
+        </div>
+      </div>
+      <div data-r>
+        <div class="fw" id="fwrap">
+          <div class="f2c">
+            <div class="fg"><label>Nombre</label><input id="fn" type="text" placeholder="Tu nombre completo" required></div>
+            <div class="fg"><label>Cargo</label><input id="fc" type="text" placeholder="CEO / CFO / COO"></div>
+          </div>
+          <div class="fg"><label>Email corporativo</label><input id="fe" type="email" placeholder="nombre@empresa.com" required></div>
+          <div class="f2c">
+            <div class="fg"><label>Empresa</label><input id="fem" type="text" placeholder="Nombre de tu empresa"></div>
+            <div class="fg"><label>Tamaño del equipo</label>
+              <select id="ft">
+                <option value="">Selecciona...</option>
+                <option>50–200 personas</option>
+                <option>200–500 personas</option>
+                <option>500–1,500 personas</option>
+                <option>+1,500 personas</option>
+              </select>
+            </div>
+          </div>
+          <div class="fg"><label>¿Qué conversación está más desconectada?</label>
+            <select id="fq">
+              <option value="">La más crítica en tu empresa...</option>
+              <option>Talento — el equipo no rinde al nivel de su potencial</option>
+              <option>IA — compramos herramientas sin ver el ROI esperado</option>
+              <option>Medios — nuestra presencia no refleja quiénes somos</option>
+              <option>Estrategia — los objetivos no bajan al trabajo diario</option>
+              <option>Las tres conversaciones están desconectadas entre sí</option>
+            </select>
+          </div>
+          <div class="fg"><label>Contexto (opcional)</label><textarea id="fm" placeholder="¿Cuál es la urgencia? ¿Qué está pasando en la organización que los trajo aquí?"></textarea></div>
+          <button class="f-submit" onclick="enviar()">Agendar exploración gratuita →</button>
+          <p class="f-note">Sin compromiso · Respuesta en menos de 24 horas</p>
+        </div>
+        <div class="f-ok" id="fok">
+          <div class="f-ok-icon">✓</div>
+          <h3>Mensaje recibido.</h3>
+          <p>Te escribimos en menos de 24 horas para coordinar la exploración. Revisa tu bandeja de entrada — incluyendo spam.<br><br>También puedes escribirnos directamente a <a href="mailto:medios@elementalstudio2017.com" style="color:var(--sageL)">medios@elementalstudio2017.com</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="f-brand">elemental<span class="logo-mark logo-mark--lg"><span class="lm-t"></span><span class="lm-b"></span></span></div>
+  <div class="f-mid">medios@elementalstudio2017.com<br>Bogotá, Colombia · 2026</div>
+  <div class="f-right"><a href="mailto:medios@elementalstudio2017.com" class="f-email">elemental.</a></div>
+</footer>
+
+<!-- ═══ STICKY BAR ════════════════════════════════════════════════════════ -->
+<div class="sbar" id="sbar">
+  <span class="sbar-msg"><strong>elemental<span class="logo-mark logo-mark--sm"><span class="lm-t"></span><span class="lm-b"></span></span></strong> — ¿Cuánto cuesta cada semana no saber qué conversación falta conectar?</span>
+  <div class="sbar-btns">
+    <a href="#brazos" class="btn-stroke" style="padding:10px 18px;font-size:12px">Ver qué hacemos</a>
+    <a href="#contacto" class="btn-gold" style="padding:10px 22px;font-size:12px;border-radius:2px">Hablar con nosotros →</a>
+  </div>
+</div>
+
+<!-- ═══ SCRIPTS ═══════════════════════════════════════════════════════════ -->
+<script>
+/* CURSOR */
+const cdot=document.getElementById('cdot'),cring=document.getElementById('cring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cdot.style.left=mx+'px';cdot.style.top=my+'px'},{passive:true});
+(function tick(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cring.style.left=rx+'px';cring.style.top=ry+'px';requestAnimationFrame(tick)})();
+
+/* NAV + STICKY */
+const nav=document.getElementById('nav'),sbar=document.getElementById('sbar');
+window.addEventListener('scroll',()=>{
+  const sy=scrollY;
+  nav.classList.toggle('is-solid',sy>80);
+  sbar.classList.toggle('on',sy>innerHeight*.85);
+},{passive:true});
+
+/* SCROLL REVEAL */
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');ro.unobserve(e.target);}});
+},{threshold:.06,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('[data-r]').forEach(el=>ro.observe(el));
+
+/* SMOOTH SCROLL */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+
+/* PRODUCTS ACCORDION */
+function togglePa(item){
+  const was=item.classList.contains('open');
+  document.querySelectorAll('.pa').forEach(p=>p.classList.remove('open'));
+  if(!was)item.classList.add('open');
+}
+
+/* FAQ ACCORDION */
+function toggleFaq(item){
+  const was=item.classList.contains('open');
+  document.querySelectorAll('.fq').forEach(f=>f.classList.remove('open'));
+  if(!was)item.classList.add('open');
+}
+
+/* CALCULADORA */
+function calcular(){
+  const p=+document.getElementById('rp').value;
+  const c=+document.getElementById('rc').value;
+  const h=+document.getElementById('rh').value;
+  document.getElementById('vp').textContent=p;
+  document.getElementById('vc').textContent='$'+c;
+  document.getElementById('vh').textContent=h+'h';
+  const horas=Math.round(p*h*.30);
+  document.getElementById('cnum').textContent=horas.toLocaleString('es-CO')+' h/sem recuperables';
+}
+calcular();
+
+/* FORM */
+function enviar(){
+  const n=document.getElementById('fn').value.trim();
+  const e=document.getElementById('fe').value.trim();
+  if(!n||!e){alert('Por favor ingresa tu nombre y email para continuar.');return;}
+  document.getElementById('fwrap').style.display='none';
+  document.getElementById('fok').style.display='block';
+}
+</script>
+</body>
+</html>
