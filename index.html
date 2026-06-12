@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>elemental. — Capacidad real, no adopción tecnológica</title>
+<meta name="description" content="Auditamos si la inversión que tu empresa hizo en IA se está convirtiendo en capacidad productiva real. Modelo de las Tres Lentes™. Bogotá, Colombia."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,200;1,9..144,300&family=Syne:wght@400;500;600;700;800&family=Syne+Mono&display=swap" rel="stylesheet"/>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --paper:#FFFFFF;--paper2:#FAF8F4;--sand:#EFE9DE;--sand2:#E5DCCB;
+  --ink:#15110D;--ink2:#3A352F;--mist:#7A7268;--fog:#A89E91;
+  --line:rgba(21,17,13,.1);--line2:rgba(21,17,13,.06);
+  --dot:#E97132;--dotSoft:rgba(233,113,50,.1);--dot2:#D55F22;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Syne',system-ui,sans-serif;
+  --mono:'Syne Mono',monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--dot);color:#fff}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
+/* ─── LOGO MARK ───────────────────────────────── */
+.logo{display:inline-flex;align-items:baseline}
+.logo-name{font-family:var(--serif);font-weight:300;letter-spacing:-.015em;color:var(--ink)}
+.logo-dots{display:inline-flex;flex-direction:column;gap:.16em;margin-left:.18em;position:relative;top:.12em}
+.logo-dots i{width:.18em;height:.18em;border-radius:50%;background:var(--dot);display:block}
+
+/* ─── NAV ─────────────────────────────────────── */
+nav{position:fixed;top:0;inset-inline:0;z-index:700;height:72px;padding:0 clamp(20px,4vw,48px);
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid transparent;transition:all .4s var(--ease)}
+nav.is-solid{background:rgba(255,255,255,.9);backdrop-filter:blur(18px);border-color:var(--line)}
+nav .logo-name{font-size:24px}
+.nav-links{display:flex;gap:34px;align-items:center}
+.nav-link{font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--mist);transition:color .2s}
+.nav-link:hover{color:var(--ink)}
+.nav-cta{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:var(--ink);padding:11px 22px;border-radius:100px;transition:all .25s}
+.nav-cta:hover{background:var(--dot);transform:translateY(-1px)}
+
+/* ─── HERO ────────────────────────────────────── */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  position:relative;padding:140px clamp(20px,4vw,48px) 70px;overflow:hidden;background:var(--paper)}
+.hero-grid-bg{position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(var(--line2) 1px,transparent 1px),linear-gradient(90deg,var(--line2) 1px,transparent 1px);
+  background-size:clamp(60px,8vw,110px) clamp(60px,8vw,110px);
+  mask-image:radial-gradient(ellipse 75% 65% at 50% 40%,black,transparent 80%)}
+
+/* Animated ambient orbit of dots — the brand signature in motion */
+.hero-orbit{position:absolute;right:-60px;top:50%;transform:translateY(-50%);
+  width:min(46vw,560px);height:min(46vw,560px);pointer-events:none;opacity:.9}
+.hero-orbit svg{width:100%;height:100%;overflow:visible}
+.orbit-ring{fill:none;stroke:var(--line);stroke-width:1}
+.orbit-dot{fill:var(--dot)}
+.spin-slow{transform-origin:center;animation:spin 28s linear infinite}
+.spin-rev{transform-origin:center;animation:spin 40s linear infinite reverse}
+.spin-mid{transform-origin:center;animation:spin 20s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pulse-dot{animation:pulse 3s var(--ease) infinite}
+@keyframes pulse{0%,100%{r:7;opacity:1}50%{r:11;opacity:.7}}
+
+.hero-inner{max-width:1280px;margin:0 auto;width:100%;position:relative;z-index:2}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);
+  font-size:clamp(11px,1.4vw,12px);letter-spacing:.16em;text-transform:uppercase;color:var(--mist);
+  margin-bottom:clamp(24px,4vw,36px);opacity:0;animation:riseIn .8s var(--ease) .1s both}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--dot)}
+.hero-h1{font-family:var(--serif);font-size:clamp(48px,8.4vw,128px);font-weight:250;
+  line-height:.98;letter-spacing:-.035em;color:var(--ink);max-width:1100px}
+.hero-h1 .ln{display:block;overflow:hidden}
+.hero-h1 .ln span{display:block;transform:translateY(110%);animation:lineUp .9s var(--ease) forwards}
+.hero-h1 .ln:nth-child(1) span{animation-delay:.15s}
+.hero-h1 .ln:nth-child(2) span{animation-delay:.28s}
+.hero-h1 .ln:nth-child(3) span{animation-delay:.41s}
+.hero-h1 em{font-style:italic;font-weight:250;color:var(--mist)}
+.hero-h1 .dot-accent{color:var(--dot);display:inline-block;animation:dotPop .6s var(--ease) 1s both}
+@keyframes lineUp{to{transform:translateY(0)}}
+@keyframes dotPop{0%{transform:scale(0)}60%{transform:scale(1.3)}100%{transform:scale(1)}}
+.hero-sub{font-size:clamp(15px,1.5vw,19px);color:var(--ink2);line-height:1.75;
+  max-width:600px;margin-top:clamp(28px,4vw,40px);opacity:0;animation:riseIn .9s var(--ease) .72s both}
+.hero-ctas{display:flex;gap:14px;margin-top:clamp(32px,5vw,48px);flex-wrap:wrap;
+  opacity:0;animation:riseIn .8s var(--ease) .86s both}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--ink);
+  padding:17px 32px;border-radius:100px;transition:all .25s;position:relative;overflow:hidden}
+.btn-primary span{position:relative;z-index:1}
+.btn-primary::after{content:'';position:absolute;inset:0;background:var(--dot);
+  transform:translateY(101%);transition:transform .35s var(--ease)}
+.btn-primary:hover::after{transform:translateY(0)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(233,113,50,.28)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--ink);
+  border:1px solid var(--line);padding:17px 28px;border-radius:100px;transition:all .25s}
+.btn-ghost:hover{border-color:var(--ink);background:var(--paper2)}
+
+.hero-strip{display:grid;grid-template-columns:repeat(4,1fr);margin-top:clamp(56px,8vw,90px);
+  border-top:1px solid var(--line);opacity:0;animation:riseIn .9s var(--ease) 1s both;
+  max-width:1280px;margin-inline:auto;width:100%;position:relative;z-index:2}
+.hs-item{padding:26px 24px 0 0;border-right:1px solid var(--line);padding-left:24px}
+.hs-item:first-child{padding-left:0}
+.hs-item:last-child{border-right:none}
+.hs-val{font-family:var(--serif);font-size:clamp(26px,3.4vw,36px);font-weight:300;color:var(--ink);line-height:1;margin-bottom:8px}
+.hs-lbl{font-size:clamp(11px,1.3vw,12px);color:var(--mist);line-height:1.55}
+
+/* ─── SHARED ──────────────────────────────────── */
+.S{padding:clamp(72px,11vw,130px) clamp(20px,4vw,48px);position:relative}
+.W{max-width:1280px;margin:0 auto;position:relative;z-index:2}
+.S--sand{background:var(--paper2)}
+.S--dark{background:var(--ink);color:#F4F0E9}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--mist);margin-bottom:26px}
+.kicker::before{content:'';width:28px;height:1px;background:var(--dot)}
+.S--dark .kicker{color:var(--fog)}
+.lc{text-transform:lowercase}
+.H{font-family:var(--serif);font-weight:250;font-size:clamp(34px,5.2vw,72px);
+  line-height:1.03;letter-spacing:-.028em;margin-bottom:24px;color:var(--ink)}
+.H em{font-style:italic;color:var(--mist)}
+.S--dark .H{color:#F4F0E9}
+.S--dark .H em{color:rgba(244,240,233,.5)}
+.lead{font-size:clamp(15px,1.7vw,17px);line-height:1.8;color:var(--ink2);max-width:680px}
+.S--dark .lead{color:rgba(244,240,233,.72)}
+
+/* floating ambient dots in sections */
+.amb{position:absolute;border-radius:50%;background:var(--dot);opacity:.12;pointer-events:none}
+.amb-float{animation:floatY 7s var(--ease) infinite}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
+
+/* ─── AXIOM ───────────────────────────────────── */
+.axiom{padding:clamp(72px,11vw,110px) clamp(20px,4vw,48px);background:var(--sand);position:relative;overflow:hidden}
+.axiom-wave{position:absolute;inset:0;pointer-events:none;opacity:.5}
+.axiom-body{max-width:980px;margin:0 auto;text-align:center;position:relative;z-index:2}
+.axiom-dots-row{display:flex;justify-content:center;gap:12px;margin-bottom:34px}
+.axiom-dots-row i{width:11px;height:11px;border-radius:50%;background:var(--dot);display:block}
+.axiom-dots-row i:nth-child(1){animation:blink 2.4s ease infinite}
+.axiom-dots-row i:nth-child(2){animation:blink 2.4s ease infinite .8s}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.8)}}
+.axiom-q{font-family:var(--serif);font-size:clamp(26px,4.4vw,58px);font-weight:250;
+  font-style:italic;color:var(--ink);line-height:1.3;letter-spacing:-.02em}
+.axiom-q em{font-style:normal;color:var(--dot)}
+.axiom-attr{font-family:var(--mono);font-size:12px;color:var(--mist);margin-top:30px;letter-spacing:.1em;text-transform:uppercase}
+
+/* ─── TRES LENTES (con ilustración SVG) ───────── */
+.lentes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:clamp(48px,7vw,72px);border-top:1px solid var(--line)}
+.lente{padding:clamp(36px,5vw,52px) clamp(24px,3vw,40px) clamp(36px,5vw,52px) clamp(24px,3vw,40px);
+  border-right:1px solid var(--line);position:relative;transition:background .3s;overflow:hidden}
+.lente:first-child{padding-left:0}
+.lente:last-child{border-right:none}
+.lente:hover{background:var(--paper2)}
+.lente:hover .lente-viz circle:first-of-type{transform:scale(1.06)}
+.lente-viz{width:72px;height:72px;margin-bottom:24px}
+.lente-viz svg{width:100%;height:100%;overflow:visible}
+.lente-viz circle,.lente-viz path,.lente-viz line{transition:all .5s var(--ease)}
+.lv-ring{fill:none;stroke:var(--dot);stroke-width:1.5}
+.lv-core{fill:var(--dot)}
+.lv-soft{fill:var(--dotSoft)}
+.lv-stroke{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round}
+.lente-num{font-family:var(--mono);font-size:13px;color:var(--dot);letter-spacing:.12em;margin-bottom:18px;
+  display:flex;align-items:center;gap:10px}
+.lente-num::after{content:'';flex:1;height:1px;background:var(--line)}
+.lente-h{font-family:var(--serif);font-size:clamp(28px,3.6vw,36px);font-weight:300;color:var(--ink);
+  line-height:1.1;margin-bottom:16px;letter-spacing:-.015em}
+.lente-q{font-size:15px;font-style:italic;color:var(--ink2);line-height:1.65;margin-bottom:16px;
+  font-family:var(--serif);font-weight:300}
+.lente-p{font-size:14px;color:var(--mist);line-height:1.75}
+
+/* ─── RITUALES ────────────────────────────────── */
+.rituales-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,2.5vw,28px);margin-top:clamp(48px,7vw,72px)}
+.ritual{padding:clamp(34px,4vw,46px) clamp(28px,3vw,38px);background:rgba(255,255,255,.04);
+  border:1px solid rgba(244,240,233,.12);border-radius:20px;transition:all .35s var(--ease);position:relative;overflow:hidden}
+.ritual-step{position:absolute;top:clamp(34px,4vw,46px);right:clamp(28px,3vw,38px);
+  width:46px;height:46px}
+.ritual-step svg{width:100%;height:100%;overflow:visible}
+.rs-track{fill:none;stroke:rgba(244,240,233,.15);stroke-width:2}
+.rs-prog{fill:none;stroke:var(--dot);stroke-width:2;stroke-linecap:round;
+  stroke-dasharray:126;stroke-dashoffset:126;transition:stroke-dashoffset 1.2s var(--ease)}
+.ritual.on .rs-prog{stroke-dashoffset:var(--off,42)}
+.ritual::before{content:'';position:absolute;top:0;left:clamp(28px,3vw,38px);width:44px;height:3px;background:var(--dot);border-radius:0 0 3px 3px}
+.ritual:hover{transform:translateY(-6px);border-color:rgba(233,113,50,.45);background:rgba(255,255,255,.06)}
+.ritual-tag{font-family:var(--mono);font-size:11px;color:var(--dot);letter-spacing:.14em;text-transform:uppercase;margin-bottom:18px;margin-top:8px}
+.ritual-h{font-family:var(--serif);font-size:clamp(24px,3vw,28px);font-weight:300;color:#F4F0E9;line-height:1.15;margin-bottom:16px;letter-spacing:-.01em}
+.ritual-p{font-size:14px;color:rgba(244,240,233,.66);line-height:1.78}
+.ritual-list{list-style:none;margin-top:20px;padding-top:20px;border-top:1px solid rgba(244,240,233,.1)}
+.ritual-list li{font-size:13px;color:rgba(244,240,233,.6);padding:6px 0;line-height:1.6;display:flex;gap:12px}
+.ritual-list li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--dot);flex-shrink:0;margin-top:8px}
+
+/* ─── CAPACIDAD REAL ──────────────────────────── */
+.cr-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(40px,6vw,90px);align-items:start;margin-top:24px}
+.cr-promise{font-family:var(--serif);font-size:clamp(20px,2.4vw,30px);font-weight:300;font-style:italic;color:var(--ink);
+  line-height:1.5;letter-spacing:-.01em;padding-left:32px;border-left:3px solid var(--dot);margin:42px 0}
+.cr-desc{font-size:16px;color:var(--ink2);line-height:1.85;max-width:600px}
+.cr-features{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.cr-feature{padding:clamp(26px,3vw,34px) 0;border-bottom:1px solid var(--line);transition:padding-left .3s var(--ease)}
+.cr-feature:hover{padding-left:14px}
+.cr-f-h{font-family:var(--serif);font-size:clamp(20px,2.4vw,23px);font-weight:400;color:var(--ink);
+  margin-bottom:12px;letter-spacing:-.01em;display:flex;align-items:baseline;gap:14px}
+.cr-f-h::before{content:'';width:9px;height:9px;border-radius:50%;background:var(--dot);flex-shrink:0;position:relative;top:-2px}
+.cr-f-p{font-size:14px;color:var(--mist);line-height:1.75;padding-left:23px}
+
+/* ─── SISTEMA ─────────────────────────────────── */
+.sat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(18px,2.5vw,24px);margin-top:clamp(48px,7vw,64px)}
+.sat{padding:clamp(34px,4vw,44px) clamp(28px,3vw,40px);background:var(--paper);border:1px solid var(--line);
+  border-radius:20px;transition:all .35s var(--ease);position:relative;overflow:hidden}
+.sat::after{content:'';position:absolute;top:clamp(34px,4vw,44px);right:clamp(28px,3vw,40px);
+  width:34px;height:34px;border-radius:50%;border:1px solid var(--line);
+  background:radial-gradient(circle at center,var(--dot) 0 4px,transparent 4px);
+  background-size:8px 8px;background-position:center;background-repeat:no-repeat;opacity:.4;transition:all .35s}
+.sat:hover{transform:translateY(-5px);border-color:rgba(233,113,50,.5);box-shadow:0 24px 50px rgba(21,17,13,.07)}
+.sat:hover::after{opacity:1;transform:rotate(90deg);border-color:var(--dot)}
+.sat-cat{font-family:var(--mono);font-size:11px;color:var(--dot);letter-spacing:.14em;text-transform:uppercase;margin-bottom:18px}
+.sat-h{font-family:var(--serif);font-size:clamp(26px,3.2vw,30px);font-weight:300;color:var(--ink);line-height:1.12;margin-bottom:10px;letter-spacing:-.015em}
+.sat-tagline{font-size:14px;color:var(--ink2);font-style:italic;font-family:var(--serif);margin-bottom:18px;line-height:1.5;max-width:88%}
+.sat-p{font-size:14px;color:var(--mist);line-height:1.75}
+.sat-full{grid-column:1/-1}
+.sat-note{margin-top:clamp(32px,5vw,48px);padding:clamp(28px,4vw,34px) clamp(28px,4vw,40px);background:var(--sand);border-radius:20px;
+  display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap}
+.sat-note p{font-family:var(--serif);font-size:clamp(17px,2vw,19px);font-style:italic;color:var(--ink);font-weight:300;line-height:1.5;max-width:640px}
+
+/* ─── CLIENTES (marquee dinámico) ─────────────── */
+.cli-marquee{margin-top:clamp(48px,7vw,64px);overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:8px 0;
+  -webkit-mask-image:linear-gradient(90deg,transparent,black 8%,black 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,black 8%,black 92%,transparent)}
+.cli-track{display:flex;width:max-content;animation:marq 32s linear infinite}
+.cli-marquee:hover .cli-track{animation-play-state:paused}
+.cli-chip{display:flex;align-items:baseline;gap:12px;padding:22px 40px;border-right:1px solid var(--line);white-space:nowrap}
+.cli-chip .cli-nom{font-family:var(--serif);font-size:clamp(20px,2.4vw,26px);font-weight:300;color:var(--ink)}
+.cli-chip .cli-cat{font-family:var(--mono);font-size:10px;color:var(--fog);letter-spacing:.08em;text-transform:uppercase}
+.cli-chip .cli-dot{width:6px;height:6px;border-radius:50%;background:var(--dot);align-self:center}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ─── FAQ ─────────────────────────────────────── */
+.faq-list{margin-top:clamp(44px,6vw,64px);border-top:1px solid var(--line)}
+.faq-item{border-bottom:1px solid var(--line);padding:clamp(24px,3vw,30px) 0}
+.faq-q{display:flex;justify-content:space-between;align-items:center;cursor:pointer;
+  font-family:var(--serif);font-size:clamp(19px,2.4vw,22px);font-weight:300;color:var(--ink);letter-spacing:-.01em;transition:color .2s;gap:20px}
+.faq-q:hover{color:var(--dot)}
+.faq-toggle{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);color:var(--dot);font-size:18px;flex-shrink:0;transition:all .3s}
+.faq-item.open .faq-toggle{transform:rotate(135deg);background:var(--dotSoft);border-color:var(--dot)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .45s var(--ease),margin .45s var(--ease)}
+.faq-item.open .faq-a{max-height:540px;margin-top:20px}
+.faq-a p{font-size:15px;color:var(--mist);line-height:1.8;max-width:820px}
+
+/* ─── MEDIOS ──────────────────────────────────── */
+.medios-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(18px,2.5vw,24px);margin-top:clamp(44px,6vw,64px)}
+.medio{padding:clamp(34px,4vw,44px) clamp(28px,3vw,40px);background:var(--paper);border:1px solid var(--line);border-radius:20px;transition:all .35s var(--ease)}
+.medio:hover{transform:translateY(-5px);box-shadow:0 24px 50px rgba(21,17,13,.06)}
+.medio-r{font-family:var(--mono);font-size:11px;color:var(--dot);letter-spacing:.14em;margin-bottom:16px;text-transform:uppercase}
+.medio-h{font-family:var(--serif);font-size:clamp(24px,3vw,27px);font-weight:300;color:var(--ink);line-height:1.15;margin-bottom:8px;letter-spacing:-.01em}
+.medio-cat{font-size:13px;color:var(--mist);font-style:italic;margin-bottom:18px;font-family:var(--serif)}
+.medio-p{font-size:14px;color:var(--mist);line-height:1.75;margin-bottom:18px}
+.medio-list{list-style:none;padding-top:18px;border-top:1px solid var(--line2)}
+.medio-list li{font-size:13px;color:var(--mist);padding:6px 0;line-height:1.6;display:flex;gap:12px}
+.medio-list li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--dot);flex-shrink:0;margin-top:8px}
+
+/* ─── CONTACTO ────────────────────────────────── */
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,90px);align-items:start}
+.contact-p{font-size:16px;color:var(--ink2);line-height:1.85;margin-bottom:40px}
+.pasos{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.paso{display:flex;gap:22px;align-items:flex-start;padding:24px 0;border-bottom:1px solid var(--line);transition:padding-left .3s var(--ease)}
+.paso:hover{padding-left:10px}
+.paso-n{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:12px;color:var(--dot);flex-shrink:0;margin-top:2px;transition:all .3s}
+.paso:hover .paso-n{background:var(--dot);color:#fff;border-color:var(--dot)}
+.paso-t{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.paso-s{font-size:13px;color:var(--mist);line-height:1.6}
+
+.fw{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:clamp(28px,4vw,48px);box-shadow:0 30px 70px rgba(21,17,13,.05)}
+.f2c{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fg{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+.fg label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mist)}
+.fg input,.fg select,.fg textarea{background:var(--paper2);border:1px solid var(--line);border-radius:12px;
+  padding:14px 16px;font-size:14px;color:var(--ink);font-family:var(--sans);outline:none;width:100%;transition:border-color .2s}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--fog)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--dot)}
+.fg textarea{resize:vertical;min-height:90px;line-height:1.65}
+.f-submit{width:100%;padding:17px;background:var(--ink);border:none;border-radius:100px;font-family:var(--sans);
+  font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;cursor:pointer;transition:all .25s}
+.f-submit:hover{background:var(--dot);transform:translateY(-1px)}
+.f-note{font-size:12px;color:var(--fog);text-align:center;margin-top:14px;font-style:italic}
+.f-ok{display:none;text-align:center;padding:70px 24px}
+.f-ok-icon{width:60px;height:60px;border-radius:50%;background:var(--dotSoft);border:1px solid var(--dot);
+  display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--dot);margin:0 auto 24px}
+.f-ok h3{font-family:var(--serif);font-size:30px;font-weight:300;color:var(--ink);margin-bottom:12px}
+.f-ok p{font-size:14px;color:var(--mist);line-height:1.75}
+
+/* ─── FOOTER ──────────────────────────────────── */
+footer{background:var(--ink);padding:clamp(44px,6vw,64px) clamp(20px,4vw,48px);display:grid;
+  grid-template-columns:1fr auto 1fr;align-items:center;gap:28px}
+footer .logo-name{color:#F4F0E9;font-size:26px}
+.f-mid{text-align:center;font-size:12px;color:rgba(244,240,233,.45);line-height:1.8;letter-spacing:.02em}
+.f-right{text-align:right}
+.f-email{font-size:14px;color:var(--dot);transition:opacity .2s}
+.f-email:hover{opacity:.75}
+
+/* ─── REVEAL ──────────────────────────────────── */
+[data-r]{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+[data-r].on{opacity:1;transform:none}
+[data-r-d="1"]{transition-delay:.12s}
+[data-r-d="2"]{transition-delay:.24s}
+[data-r-d="3"]{transition-delay:.36s}
+@keyframes riseIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
+/* ─── RESPONSIVE ──────────────────────────────── */
+@media(max-width:1024px){
+  nav{padding:0 24px}
+  .nav-links .nav-link{display:none}
+}
+@media(max-width:900px){
+  .hero-orbit{opacity:.35;right:-30%}
+  .hero-strip{grid-template-columns:1fr 1fr}
+  .hs-item{border-right:none;padding-left:0;border-bottom:1px solid var(--line);padding-bottom:18px}
+  .hs-item:nth-child(odd){border-right:1px solid var(--line);padding-right:18px}
+  .lentes-grid{grid-template-columns:1fr}
+  .lente{border-right:none;border-bottom:1px solid var(--line);padding-left:0;padding-right:0}
+  .rituales-grid{grid-template-columns:1fr}
+  .cr-wrap{grid-template-columns:1fr;gap:48px}
+  .sat-grid,.medios-grid{grid-template-columns:1fr}
+  .contact-layout{grid-template-columns:1fr;gap:56px}
+}
+@media(max-width:640px){
+  .hero-orbit{display:none}
+  .axiom-q br{display:none}
+  .clientes{}
+  .fw{padding:30px 22px}
+  .f2c{grid-template-columns:1fr}
+  .btn-primary,.btn-ghost{width:100%;justify-content:center}
+  .hero-ctas{flex-direction:column}
+  footer{grid-template-columns:1fr;gap:18px;text-align:center}
+  .f-right{text-align:center}
+  .sat-note{flex-direction:column;align-items:flex-start}
+  .sat-note .btn-primary{width:100%;justify-content:center}
+  .hero-strip{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#inicio" class="logo">
+    <span class="logo-name">elemental</span>
+    <span class="logo-dots"><i></i><i></i></span>
+  </a>
+  <div class="nav-links">
+    <a href="#metodologia" class="nav-link">Metodología</a>
+    <a href="#capacidad-real" class="nav-link">Capacidad Real</a>
+    <a href="#sistema" class="nav-link">Sistema</a>
+    <a href="#medios" class="nav-link">Medios</a>
+    <a href="#contacto" class="nav-cta">Conversemos</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+
+  <!-- Signature animation: orbiting dots -->
+  <div class="hero-orbit" aria-hidden="true">
+    <svg viewBox="0 0 400 400">
+      <circle class="orbit-ring" cx="200" cy="200" r="180"/>
+      <circle class="orbit-ring" cx="200" cy="200" r="130"/>
+      <circle class="orbit-ring" cx="200" cy="200" r="80"/>
+      <g class="spin-slow"><circle class="orbit-dot" cx="200" cy="20" r="9"/></g>
+      <g class="spin-rev"><circle class="orbit-dot" cx="200" cy="70" r="7" opacity=".7"/></g>
+      <g class="spin-mid"><circle class="orbit-dot" cx="200" cy="120" r="6" opacity=".5"/></g>
+      <circle class="orbit-dot pulse-dot" cx="200" cy="200" r="7"/>
+    </svg>
+  </div>
+
+  <div class="hero-inner">
+    <p class="hero-eyebrow"><span class="lc">elemental.</span> · bogotá, colombia</p>
+    <h1 class="hero-h1">
+      <span class="ln"><span>Capacidad real,</span></span>
+      <span class="ln"><span>no adopción</span></span>
+      <span class="ln"><span><em>tecnológica</em><span class="dot-accent">.</span></span></span>
+    </h1>
+    <p class="hero-sub">Tu empresa ya invirtió en IA. La pregunta no es si funciona técnicamente — es si se está convirtiendo en capacidad productiva real en el negocio. Auditamos esa capacidad desde tres lentes que normalmente nadie cruza: estrategia, talento y procesos.</p>
+    <div class="hero-ctas">
+      <a href="#capacidad-real" class="btn-primary"><span>Conocer Capacidad Real →</span></a>
+      <a href="#contacto" class="btn-ghost">Conversemos</a>
+    </div>
+  </div>
+
+  <div class="hero-strip">
+    <div class="hs-item"><div class="hs-val">40%</div><div class="hs-lbl">de horas semanales sin valor estratégico</div></div>
+    <div class="hs-item"><div class="hs-val">~18%</div><div class="hs-lbl">del revenue potencial perdido por fricción</div></div>
+    <div class="hs-item"><div class="hs-val">3</div><div class="hs-lbl">lentes: estrategia, talento y procesos</div></div>
+    <div class="hs-item"><div class="hs-val">90d</div><div class="hs-lbl">plan de recuperación ejecutable</div></div>
+  </div>
+</section>
+
+<!-- AXIOM -->
+<div class="axiom">
+  <svg class="axiom-wave" viewBox="0 0 1440 400" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,220 Q360,140 720,220 T1440,220" fill="none" stroke="rgba(233,113,50,.18)" stroke-width="1.5"/>
+    <path d="M0,260 Q360,180 720,260 T1440,260" fill="none" stroke="rgba(21,17,13,.06)" stroke-width="1.5"/>
+  </svg>
+  <div class="axiom-body" data-r>
+    <div class="axiom-dots-row"><i></i><i></i></div>
+    <p class="axiom-q">"La IA no se mide en adopción.<br>Se mide en <em>capacidad real</em>."</p>
+    <p class="axiom-attr">— principio fundacional · <span class="lc">elemental.</span></p>
+  </div>
+</div>
+
+<!-- TRES LENTES -->
+<section class="S" id="metodologia">
+  <span class="amb amb-float" style="width:80px;height:80px;top:8%;right:6%"></span>
+  <div class="W">
+    <p class="kicker" data-r>metodología propietaria</p>
+    <h2 class="H" data-r>Modelo de las<br><em>Tres Lentes™.</em></h2>
+    <p class="lead" data-r>Evaluamos la capacidad real de tu organización desde tres lentes simultáneas. Esa intersección es lo que separa la adopción tecnológica de la capacidad productiva real — y es donde aparece la fricción que bloquea el retorno.</p>
+
+    <div class="lentes-grid">
+      <div class="lente" data-r>
+        <div class="lente-viz" aria-hidden="true">
+          <svg viewBox="0 0 80 80">
+            <circle class="lv-soft" cx="40" cy="40" r="34"/>
+            <path class="lv-stroke" d="M40 14 L40 40 L60 52"/>
+            <circle class="lv-ring" cx="40" cy="40" r="34"/>
+            <circle class="lv-core" cx="40" cy="40" r="4"/>
+          </svg>
+        </div>
+        <div class="lente-num">lente 01</div>
+        <h3 class="lente-h">Estrategia</h3>
+        <p class="lente-q">"¿Las iniciativas están realmente apalancando los OKRs del negocio?"</p>
+        <p class="lente-p">Verificamos si lo que implementaste se quedó como proyecto técnicamente impresionante o si está moviendo los indicadores que le importan al directorio.</p>
+      </div>
+      <div class="lente" data-r data-r-d="1">
+        <div class="lente-viz" aria-hidden="true">
+          <svg viewBox="0 0 80 80">
+            <circle class="lv-soft" cx="40" cy="40" r="34"/>
+            <circle class="lv-stroke" cx="28" cy="34" r="8"/>
+            <circle class="lv-stroke" cx="52" cy="34" r="8"/>
+            <path class="lv-stroke" d="M20 58 Q28 46 36 52 M44 52 Q52 46 60 58"/>
+            <circle class="lv-core" cx="28" cy="34" r="3"/>
+            <circle class="lv-core" cx="52" cy="34" r="3"/>
+          </svg>
+        </div>
+        <div class="lente-num">lente 02</div>
+        <h3 class="lente-h">Talento</h3>
+        <p class="lente-q">"¿El equipo opera de forma que potencia la inversión, o la sabotea?"</p>
+        <p class="lente-p">Identificamos roles que no se rediseñaron, capacidades que faltaron y procesos de decisión que la IA cambió pero el equipo no actualizó. La fricción humana suele concentrar la mayor parte del retorno perdido.</p>
+      </div>
+      <div class="lente" data-r data-r-d="2">
+        <div class="lente-viz" aria-hidden="true">
+          <svg viewBox="0 0 80 80">
+            <circle class="lv-soft" cx="40" cy="40" r="34"/>
+            <path class="lv-stroke" d="M22 54 L22 44 M34 54 L34 36 M46 54 L46 28 M58 54 L58 20"/>
+            <circle class="lv-core" cx="22" cy="44" r="3"/>
+            <circle class="lv-core" cx="34" cy="36" r="3"/>
+            <circle class="lv-core" cx="46" cy="28" r="3"/>
+            <circle class="lv-core" cx="58" cy="20" r="3"/>
+          </svg>
+        </div>
+        <div class="lente-num">lente 03</div>
+        <h3 class="lente-h">Capacidad Productiva</h3>
+        <p class="lente-q">"¿Cuánta capacidad real se liberó, cuánta se generó, cuánta sigue atrapada?"</p>
+        <p class="lente-p">Medimos la capacidad real producida frente a la teórica prometida. Es la lente más rara — y la más reveladora. Raramente coinciden.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RITUALES -->
+<section class="S S--dark">
+  <div class="W">
+    <p class="kicker" data-r>la experiencia <span class="lc">elemental.</span></p>
+    <h2 class="H" data-r>Tres rituales propietarios<br>que <em>cambian la relación.</em></h2>
+    <p class="lead" data-r>La consultoría tradicional entrega y desaparece. Nosotros operamos con tres rituales diseñados para eliminar la caja negra, garantizar co-construcción y sostener resultados después de la entrega.</p>
+
+    <div class="rituales-grid">
+      <div class="ritual" data-r style="--off:84">
+        <div class="ritual-step" aria-hidden="true"><svg viewBox="0 0 46 46"><circle class="rs-track" cx="23" cy="23" r="20"/><circle class="rs-prog" cx="23" cy="23" r="20" transform="rotate(-90 23 23)"/></svg></div>
+        <div class="ritual-tag">ritual 01 · durante</div>
+        <h3 class="ritual-h">Reportes Pulso</h3>
+        <p class="ritual-p">Al día 3 y al día 6 del proyecto recibes un reporte estructurado de una página con los hallazgos preliminares y las hipótesis principales. Eliminamos la caja negra típica de la consultoría.</p>
+        <ul class="ritual-list">
+          <li>Pulso Día 3: hallazgos preliminares</li>
+          <li>Pulso Día 6: hipótesis principal del diagnóstico</li>
+          <li>Voicenote de 2 minutos con cada reporte</li>
+        </ul>
+      </div>
+      <div class="ritual" data-r data-r-d="1" style="--off:42">
+        <div class="ritual-step" aria-hidden="true"><svg viewBox="0 0 46 46"><circle class="rs-track" cx="23" cy="23" r="20"/><circle class="rs-prog" cx="23" cy="23" r="20" transform="rotate(-90 23 23)"/></svg></div>
+        <div class="ritual-tag">ritual 02 · antes de entregar</div>
+        <h3 class="ritual-h">Sesión de Co-Validación</h3>
+        <p class="ritual-p">Antes de armar el documento final, una sesión de 60 minutos para validar contigo los hallazgos preliminares. El entregable final es co-construido, nunca impuesto.</p>
+        <ul class="ritual-list">
+          <li>Tres días antes de la entrega final</li>
+          <li>Presentación de hallazgos en bruto</li>
+          <li>Actas formales enviadas en 24 horas</li>
+        </ul>
+      </div>
+      <div class="ritual" data-r data-r-d="2" style="--off:8">
+        <div class="ritual-step" aria-hidden="true"><svg viewBox="0 0 46 46"><circle class="rs-track" cx="23" cy="23" r="20"/><circle class="rs-prog" cx="23" cy="23" r="20" transform="rotate(-90 23 23)"/></svg></div>
+        <div class="ritual-tag">ritual 03 · postentrega</div>
+        <h3 class="ritual-h">Check-ins 30/60/90</h3>
+        <p class="ritual-p">Tres sesiones gratuitas después de la entrega para revisar implementación, medir impacto preliminar y documentar resultado real. Incluidas. No te dejamos solo con el documento.</p>
+        <ul class="ritual-list">
+          <li>Día 30: ajustes en caliente</li>
+          <li>Día 60: medición preliminar del impacto</li>
+          <li>Día 90: resultado documentado y cierre</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPACIDAD REAL -->
+<section class="S" id="capacidad-real">
+  <span class="amb amb-float" style="width:120px;height:120px;bottom:10%;left:4%;animation-delay:1.5s"></span>
+  <div class="W">
+    <p class="kicker" data-r>capacidad real · auditoría de IA y capacidad productiva</p>
+    <h2 class="H" data-r>Capacidad Real<span style="color:var(--dot)">.</span></h2>
+
+    <div class="cr-wrap">
+      <div data-r>
+        <p class="cr-promise">"Medimos si tu inversión en IA se está convirtiendo en capacidad productiva real, o si solo se quedó como adopción tecnológica sofisticada sin retorno medible."</p>
+        <p class="cr-desc">Una auditoría ejecutiva que aplica el Modelo de las Tres Lentes™ — estrategia, talento y procesos — para entregarte tres instrumentos accionables: un Índice de Capacidad Real por iniciativa, un Mapa de Fricción Humana y Organizacional, y un Plan de Recuperación de 90 días sin requerir inversión tecnológica adicional.</p>
+      </div>
+
+      <div class="cr-features" data-r data-r-d="1">
+        <div class="cr-feature">
+          <h4 class="cr-f-h">Único en Colombia</h4>
+          <p class="cr-f-p">Ninguna firma identificable cruza las tres lentes — estrategia, talento y procesos — simultáneamente.</p>
+        </div>
+        <div class="cr-feature">
+          <h4 class="cr-f-h">Capacidad oculta visible</h4>
+          <p class="cr-f-p">Identifica capacidad real disponible sin requerir inversión tecnológica adicional. La fricción humana suele ser donde está el retorno perdido.</p>
+        </div>
+        <div class="cr-feature">
+          <h4 class="cr-f-h">Plan ejecutable en 90 días</h4>
+          <p class="cr-f-p">No es diagnóstico para archivar. Es plan de recuperación con acciones específicas, responsables claros y métricas medibles.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SISTEMA -->
+<section class="S S--sand" id="sistema">
+  <div class="W">
+    <p class="kicker" data-r>sistema completo</p>
+    <h2 class="H" data-r>Siete productos satélite<br>bajo el <em>sistema Capacidad.</em></h2>
+    <p class="lead" data-r>Capacidad Real es el corazón del sistema. Para situaciones específicas o necesidades adyacentes, el portafolio cubre auditoría adicional, diseño operativo y activación recurrente.</p>
+
+    <div class="sat-grid">
+      <div class="sat" data-r>
+        <div class="sat-cat">auditoría · talento estratégico</div>
+        <h3 class="sat-h">Capacidad Crítica</h3>
+        <p class="sat-tagline">Convierte la rotación en riesgo financiero medible.</p>
+        <p class="sat-p">Medimos el costo financiero real de la rotación, identificamos las personas que concentran el riesgo de romper cuentas si se van, y entregamos un plan de contención.</p>
+      </div>
+      <div class="sat" data-r data-r-d="1">
+        <div class="sat-cat">auditoría · margen erosionado</div>
+        <h3 class="sat-h">Capacidad Oculta</h3>
+        <p class="sat-tagline">El margen que se pierde sin aparecer en reportes.</p>
+        <p class="sat-p">Para agencias, firmas profesionales y empresas con cuentas grandes. Identificamos retrabajo, demoras, erosión de NPS y tiempo sénior capturado en operación. Sin tocar la conversación de talento.</p>
+      </div>
+      <div class="sat" data-r>
+        <div class="sat-cat">diseño · rediseño operativo</div>
+        <h3 class="sat-h">Capacidad Operativa</h3>
+        <p class="sat-tagline">Rediseño de procesos con IA integrada al flujo real.</p>
+        <p class="sat-p">Tomamos un área específica y rediseñamos sus procesos críticos integrando IA donde tiene sentido. Intervención operativa con medición antes y después — no consultoría de documento.</p>
+      </div>
+      <div class="sat" data-r data-r-d="1">
+        <div class="sat-cat">diseño · trayectorias profesionales</div>
+        <h3 class="sat-h">Capacidad Móvil</h3>
+        <p class="sat-tagline">Movilidad interna como herramienta de retención.</p>
+        <p class="sat-p">Rediseñamos la arquitectura de roles y movilidad interna para que las personas vean futuro adentro. Reduce rotación voluntaria del talento clave sin subir salarios.</p>
+      </div>
+      <div class="sat" data-r>
+        <div class="sat-cat">activación · liderazgo híbrido</div>
+        <h3 class="sat-h">Capacidad Estratégica</h3>
+        <p class="sat-tagline">Líderes preparados para equipos persona + IA.</p>
+        <p class="sat-p">Cohortes pequeñas de líderes que aprenden a dirigir equipos donde la IA es parte de la fuerza de trabajo. Entrenamiento práctico con coaching individual incluido.</p>
+      </div>
+      <div class="sat" data-r data-r-d="1">
+        <div class="sat-cat">activación · retención acompañada</div>
+        <h3 class="sat-h">Capacidad Sostenible</h3>
+        <p class="sat-tagline">Acompañamiento mensual del plan de contención.</p>
+        <p class="sat-p">Para empresas que ya tienen diagnóstico y necesitan acompañamiento estructurado para implementarlo. Revisión de indicadores, ajuste de palancas, blindaje de cuentas.</p>
+      </div>
+      <div class="sat sat-full" data-r>
+        <div class="sat-cat">activación · aprendizaje con IA</div>
+        <h3 class="sat-h">Capacidad Aplicada</h3>
+        <p class="sat-tagline">El equipo aprende usando sus propios proyectos reales.</p>
+        <p class="sat-p">Cohorte de personas de tu empresa que aprenden a operar con IA usando los proyectos reales del negocio como casos. El programa produce valor mientras se ejecuta — la empresa sale con los proyectos resueltos.</p>
+      </div>
+    </div>
+
+    <div class="sat-note" data-r>
+      <p>Cada empresa es distinta. Los tiempos y la inversión se definen a la medida de tu situación específica — en la primera conversación.</p>
+      <a href="#contacto" class="btn-primary"><span>Conversemos →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTES -->
+<section class="S">
+  <div class="W">
+    <p class="kicker" data-r>empresas que han confiado en <span class="lc">elemental.</span></p>
+    <h2 class="H" data-r>Confianza que <em>se construye</em><br>caso por caso.</h2>
+  </div>
+  <div class="cli-marquee" data-r>
+    <div class="cli-track">
+      <div class="cli-chip"><span class="cli-nom">PriceSmart</span><span class="cli-dot"></span><span class="cli-cat">Retail</span></div>
+      <div class="cli-chip"><span class="cli-nom">RedPapaz</span><span class="cli-dot"></span><span class="cli-cat">Social</span></div>
+      <div class="cli-chip"><span class="cli-nom">Liqui Moly</span><span class="cli-dot"></span><span class="cli-cat">Automotriz</span></div>
+      <div class="cli-chip"><span class="cli-nom">EAN</span><span class="cli-dot"></span><span class="cli-cat">Educación</span></div>
+      <div class="cli-chip"><span class="cli-nom">Alcaldía de Cali</span><span class="cli-dot"></span><span class="cli-cat">Sector Público</span></div>
+      <div class="cli-chip"><span class="cli-nom">AXA Colpatria</span><span class="cli-dot"></span><span class="cli-cat">Seguros</span></div>
+      <div class="cli-chip"><span class="cli-nom">Vehicosta</span><span class="cli-dot"></span><span class="cli-cat">Movilidad</span></div>
+      <div class="cli-chip"><span class="cli-nom">Huawei</span><span class="cli-dot"></span><span class="cli-cat">Tecnología</span></div>
+      <!-- dup -->
+      <div class="cli-chip"><span class="cli-nom">PriceSmart</span><span class="cli-dot"></span><span class="cli-cat">Retail</span></div>
+      <div class="cli-chip"><span class="cli-nom">RedPapaz</span><span class="cli-dot"></span><span class="cli-cat">Social</span></div>
+      <div class="cli-chip"><span class="cli-nom">Liqui Moly</span><span class="cli-dot"></span><span class="cli-cat">Automotriz</span></div>
+      <div class="cli-chip"><span class="cli-nom">EAN</span><span class="cli-dot"></span><span class="cli-cat">Educación</span></div>
+      <div class="cli-chip"><span class="cli-nom">Alcaldía de Cali</span><span class="cli-dot"></span><span class="cli-cat">Sector Público</span></div>
+      <div class="cli-chip"><span class="cli-nom">AXA Colpatria</span><span class="cli-dot"></span><span class="cli-cat">Seguros</span></div>
+      <div class="cli-chip"><span class="cli-nom">Vehicosta</span><span class="cli-dot"></span><span class="cli-cat">Movilidad</span></div>
+      <div class="cli-chip"><span class="cli-nom">Huawei</span><span class="cli-dot"></span><span class="cli-cat">Tecnología</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="S S--sand">
+  <div class="W">
+    <p class="kicker" data-r>preguntas frecuentes</p>
+    <h2 class="H" data-r>Lo que suelen preguntar<br><em>antes de empezar.</em></h2>
+
+    <div class="faq-list">
+      <div class="faq-item" data-r>
+        <div class="faq-q" onclick="toggleFaq(this)">¿Qué hace Capacidad Real específicamente? <span class="faq-toggle">+</span></div>
+        <div class="faq-a"><p>Capacidad Real es una auditoría ejecutiva que aplica el Modelo de las Tres Lentes™ para evaluar si tus iniciativas de IA están generando capacidad productiva real desde tres ángulos: estrategia (¿apalancan tus OKRs?), talento (¿el equipo opera bien con la IA?), y capacidad productiva (¿cuánta capacidad real se liberó?). Entregamos tres instrumentos: Índice de Capacidad Real por iniciativa, Mapa de Fricción Humana, y Plan de Recuperación de 90 días.</p></div>
+      </div>
+      <div class="faq-item" data-r>
+        <div class="faq-q" onclick="toggleFaq(this)">¿En qué se diferencia de lo que ya intentamos con otras firmas? <span class="faq-toggle">+</span></div>
+        <div class="faq-a"><p>La mayoría de proyectos empieza por la herramienta o por el proceso. Nosotros empezamos por la estrategia del negocio y bajamos hasta el diseño del trabajo humano. Además operamos con tres rituales propietarios: Reportes Pulso (días 3 y 6), Sesión de Co-Validación, y Check-ins gratuitos a los 30/60/90 días postentrega. Eso cambia radicalmente la relación.</p></div>
+      </div>
+      <div class="faq-item" data-r>
+        <div class="faq-q" onclick="toggleFaq(this)">¿Cobran por horas? <span class="faq-toggle">+</span></div>
+        <div class="faq-a"><p>No. Cobramos por proyecto y por resultado, nunca por horas. Cobrar por horas alinea los incentivos con la cantidad de trabajo, no con la calidad. Si cobramos por resultado, nuestro interés es producir el mejor resultado en el menor tiempo posible — lo que te conviene a ti, no a nosotros.</p></div>
+      </div>
+      <div class="faq-item" data-r>
+        <div class="faq-q" onclick="toggleFaq(this)">Somos una empresa de 60 personas, ¿somos demasiado pequeños? <span class="faq-toggle">+</span></div>
+        <div class="faq-a"><p>El tamaño mínimo que permite producir un business case robusto son 50 personas. Con 60 personas Capacidad Real tiene sentido si hay al menos 3-4 áreas con procesos estructurados y el CEO o COO está directamente involucrado. La señal más importante no es el tamaño sino si quien toma la decisión tiene claridad del resultado que necesita.</p></div>
+      </div>
+      <div class="faq-item" data-r>
+        <div class="faq-q" onclick="toggleFaq(this)">¿Qué pasa si la auditoría no encuentra suficiente oportunidad? <span class="faq-toggle">+</span></div>
+        <div class="faq-a"><p>Lo decimos. Hemos tenido casos donde el problema declarado era "queremos más IA" y el problema real era que los procesos eran sanos y el equipo estaba bien dimensionado — en esos casos, la recomendación fue no intervenir. Preferimos perder una venta antes que generar un caso de negocio que no se sostiene con datos reales.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIOS -->
+<section class="S" id="medios">
+  <div class="W">
+    <p class="kicker" data-r>capítulo 02 · medios & comunicación</p>
+    <h2 class="H" data-r>¿Cómo llegamos al<br>cliente correcto en<br><em>el momento exacto?</em></h2>
+    <p class="lead" data-r>Planificamos, compramos, auditamos y medimos medios — offline y digitales — con criterio estratégico y transparencia total. Sin conflictos de interés. Cuatro líneas que cubren el ciclo completo de la inversión en comunicación.</p>
+
+    <div class="medios-grid">
+      <div class="medio" data-r>
+        <div class="medio-r">i · comunicación</div>
+        <h3 class="medio-h">Planning & Buying</h3>
+        <p class="medio-cat">Planificación · Compra · Optimización</p>
+        <p class="medio-p">Diseñamos la estrategia de medios que conecta el mensaje correcto con la audiencia correcta — y la ejecutamos con poder de compra real.</p>
+        <ul class="medio-list"><li>Estrategia de comunicación integrada 360°</li><li>Planeación de medios anclada a objetivos</li><li>Compra y negociación directa</li><li>Optimización continua del presupuesto</li></ul>
+      </div>
+      <div class="medio" data-r data-r-d="1">
+        <div class="medio-r">ii · media</div>
+        <h3 class="medio-h">Medios Digitales</h3>
+        <p class="medio-cat">Offline · Digital · Integrado</p>
+        <p class="medio-p">Operamos en todo el ecosistema: TV, radio, prensa, exterior, digital y móvil. Planificación integrada — el consumidor no distingue entre offline y online.</p>
+        <ul class="medio-list"><li>TV, radio, prensa escrita</li><li>Exterior y vía pública (OOH/DOOH)</li><li>Display, video, programático</li><li>Search, social, performance</li></ul>
+      </div>
+      <div class="medio" data-r>
+        <div class="medio-r">iii · outsourcing</div>
+        <h3 class="medio-h">Auditoría & Negociación</h3>
+        <p class="medio-cat">El departamento de medios que tu empresa no tiene</p>
+        <p class="medio-p">Actuamos como tu departamento de medios o como respaldo independiente que verifica y optimiza lo que tu agencia actual hace. Transparencia total.</p>
+        <ul class="medio-list"><li>Auditoría independiente de inversión</li><li>Planeación estratégica alineada a objetivos</li><li>Negociación directa con medios</li><li>Reporting ejecutivo mensual</li></ul>
+      </div>
+      <div class="medio" data-r data-r-d="1">
+        <div class="medio-r">iv · research</div>
+        <h3 class="medio-h">Trade Marketing & BTL</h3>
+        <p class="medio-cat">Donde el mensaje toca al consumidor</p>
+        <p class="medio-p">Diseñamos y ejecutamos la presencia de marca en el canal — desde la estrategia de trade hasta la ejecución táctica con medición real.</p>
+        <ul class="medio-list"><li>Estrategia integral de trade marketing</li><li>Diseño y producción de merchandising</li><li>Activaciones promocionales en PV</li><li>Campañas BTL y experiencias de marca</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="S" id="contacto">
+  <div class="W">
+    <div class="contact-layout">
+      <div>
+        <p class="kicker" data-r>primer paso</p>
+        <h2 class="H" data-r>Una conversación<br>de <em>30 minutos.</em></h2>
+        <p class="contact-p" data-r>Antes de cualquier propuesta, una conversación corta para entender tu situación específica. Cuatro preguntas validadas y honestidad sobre si Capacidad Real es lo que necesitas — o si no.</p>
+        <div class="pasos" data-r>
+          <div class="paso"><div class="paso-n">1</div><div><div class="paso-t">Conversación inicial — 30 min, sin costo</div><div class="paso-s">Cuatro preguntas que descubren si Capacidad Real aplica</div></div></div>
+          <div class="paso"><div class="paso-n">2</div><div><div class="paso-t">Propuesta formal — solo si tiene sentido</div><div class="paso-s">Documento ejecutivo de 8 páginas con tu caso específico</div></div></div>
+          <div class="paso"><div class="paso-n">3</div><div><div class="paso-t">Capacidad Real</div><div class="paso-s">Auditoría completa con Modelo de las Tres Lentes™</div></div></div>
+        </div>
+      </div>
+      <div data-r>
+        <div class="fw" id="fwrap">
+          <div class="f2c">
+            <div class="fg"><label>Nombre</label><input id="fn" type="text" placeholder="Tu nombre completo" required></div>
+            <div class="fg"><label>Cargo</label><input id="fc" type="text" placeholder="CEO / CFO / COO / CTO"></div>
+          </div>
+          <div class="fg"><label>Email corporativo</label><input id="fe" type="email" placeholder="nombre@empresa.com" required></div>
+          <div class="f2c">
+            <div class="fg"><label>Empresa</label><input id="fem" type="text" placeholder="Nombre de tu empresa"></div>
+            <div class="fg"><label>Tamaño del equipo</label>
+              <select id="ft"><option value="">Selecciona...</option><option>50–200 personas</option><option>200–500 personas</option><option>500–1,500 personas</option><option>+1,500 personas</option></select>
+            </div>
+          </div>
+          <div class="fg"><label>¿Cuál es tu situación?</label>
+            <select id="fq"><option value="">Selecciona la más cercana...</option><option>Invertimos en IA pero no vemos el retorno esperado</option><option>Estamos perdiendo talento clave — queremos entender el costo real</option><option>Vamos a crecer y queremos saber si el equipo aguanta</option><option>Cuentas grandes pierden margen sin saber dónde</option><option>Otra situación</option></select>
+          </div>
+          <div class="fg"><label>Contexto (opcional)</label><textarea id="fm" placeholder="¿Cuál es la urgencia? ¿Qué está pasando que los trajo aquí?"></textarea></div>
+          <button class="f-submit" onclick="enviar()">Agendar conversación de 30 minutos →</button>
+          <p class="f-note">Sin compromiso · Respuesta en menos de 24 horas · medios@elementalstudio2017.com</p>
+        </div>
+        <div class="f-ok" id="fok">
+          <div class="f-ok-icon">✓</div>
+          <h3>Mensaje recibido.</h3>
+          <p>Te escribimos en menos de 24 horas para coordinar la conversación inicial. Revisa tu bandeja — incluyendo spam.<br><br>También puedes escribirnos directamente a <a href="mailto:medios@elementalstudio2017.com" style="color:var(--dot)">medios@elementalstudio2017.com</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo"><span class="logo-name">elemental</span><span class="logo-dots"><i></i><i></i></span></div>
+  <div class="f-mid">elemental. · talento humano · medios & comunicación<br>bogotá, colombia · 2026</div>
+  <div class="f-right"><a href="mailto:medios@elementalstudio2017.com" class="f-email">medios@elementalstudio2017.com</a></div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('is-solid',scrollY>80)},{passive:true});
+
+const ro=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');ro.unobserve(e.target);}});
+},{threshold:.06,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('[data-r]').forEach(el=>ro.observe(el));
+
+// animate ritual progress rings
+const rituals=document.querySelectorAll('.ritual');
+const rObs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');rObs.unobserve(e.target);}});
+},{threshold:.4});
+rituals.forEach(r=>rObs.observe(r));
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+
+function toggleFaq(el){el.parentElement.classList.toggle('open');}
+
+function enviar(){
+  const n=document.getElementById('fn').value.trim();
+  const e=document.getElementById('fe').value.trim();
+  if(!n||!e){alert('Por favor ingresa tu nombre y email para continuar.');return;}
+  document.getElementById('fwrap').style.display='none';
+  document.getElementById('fok').style.display='block';
+}
+</script>
+</body>
+</html>
